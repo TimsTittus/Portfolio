@@ -1,0 +1,37 @@
+---
+title: 'Understanding Database Indexes'
+date: '2023-09-05'
+description: 'A deep dive into how database indexes actually work under the hood using B-Trees.'
+---
+
+We all know we're supposed to "add an index" when a query is slow. But what does that actually mean? Let's peel back the layers.
+
+## The Analogy: A Book Index
+
+Imagine looking for the word "Neo-Brutalism" in a 1,000-page book. Without an index, you would have to read the book from page 1 to page 1,000. This is what a database calls a **Sequential Scan** (or Table Scan).
+
+If the book has an index at the back, you go to 'N', find "Neo-Brutalism", and it tells you exactly which page to turn to. That is what a database index does.
+
+## B-Trees: The Data Structure
+
+Most relational databases use a **B-Tree** (Balanced Tree) structure for their indexes. 
+
+A B-Tree keeps data sorted and allows searches, sequential access, insertions, and deletions in logarithmic time (`O(log n)`).
+
+### Why B-Trees?
+
+1. **Predictability**: Because it is balanced, every lookup takes roughly the same amount of time.
+2. **Range Queries**: Unlike Hash indexes, B-Trees store data sequentially. This makes them perfect for queries like `WHERE age > 18`.
+
+```sql
+-- Creating an index in PostgreSQL
+CREATE INDEX idx_users_email ON users(email);
+```
+
+## The Cost of Indexes
+
+Indexes are not free. While they drastically speed up `SELECT` queries, they slow down `INSERT`, `UPDATE`, and `DELETE` operations.
+
+Every time you write a new row to the table, the database must also update the B-Tree for every index on that table. Therefore, you should only index columns that are frequently used in `WHERE`, `JOIN`, or `ORDER BY` clauses.
+
+> **Pro Tip:** Don't over-index. Monitor your database statistics to find unused indexes and drop them to regain write performance.

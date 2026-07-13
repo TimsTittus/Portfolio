@@ -1,0 +1,47 @@
+---
+title: 'Lessons From Scaling My API'
+date: '2023-11-20'
+description: 'The bottlenecks I hit when my application traffic spiked, and how I optimized my backend to handle the load.'
+---
+
+It’s every developer's dream to see their application take off. But when traffic suddenly spikes, that dream can quickly turn into a nightmare of degraded performance and 502 Bad Gateway errors.
+
+Here are the hard lessons I learned when scaling my API.
+
+## Lesson 1: The Database is Always the Bottleneck
+
+It almost always comes down to the database. My initial API queries were writing everything directly and lacking basic indexing. The first sign of trouble was the CPU usage on my RDS instance hitting 100%.
+
+**The Fix:**
+- Add indexes to frequently queried columns.
+- Implement read replicas for heavy reporting queries.
+- Use `EXPLAIN ANALYZE` to find missing indexes.
+
+## Lesson 2: Caching is Mandatory, Not Optional
+
+I was querying the same configuration data from the database on every single request. 
+
+> The fastest database query is the one you never make.
+
+By introducing Redis to cache frequently accessed, rarely changing data, response times dropped from 200ms to 15ms.
+
+```typescript
+// Implementing a simple Cache-Aside pattern
+async function getUserProfile(userId) {
+  const cachedUser = await redis.get(`user:${userId}`);
+  if (cachedUser) {
+    return JSON.parse(cachedUser);
+  }
+
+  const user = await db.users.findUnique({ where: { id: userId } });
+  await redis.set(`user:${userId}`, JSON.stringify(user), 'EX', 3600);
+  
+  return user;
+}
+```
+
+## Lesson 3: Connection Pooling Saves Lives
+
+In a serverless environment or when spinning up many instances, creating a new database connection per request will exhaust your database's connection limit instantly. Using a connection pooler like PgBouncer was absolutely critical to keeping the system stable under load.
+
+Scaling isn't about making the code perfectly optimal; it's about identifying the biggest bottleneck and resolving it.
