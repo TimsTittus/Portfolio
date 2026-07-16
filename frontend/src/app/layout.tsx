@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import Layout from "@/components/layout/Layout";
-import Script from "next/script";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tims Tittus | CyberSecurity Student & Polymath",
@@ -18,6 +14,9 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://timstittus.vercel.app",
   },
+  icons: {
+    icon: "/assets/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -29,10 +28,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Tims Tittus",
-    "jobTitle": ["CyberSecurity Student", "Engineer", "Polymath"],
+    "jobTitle": ["CyberSecurity Student", "Engineer", "AI Enthusiast", "Polymath"],
     "url": "https://timstittus.vercel.app",
     "sameAs": [
-      "https://github.com/timstittus",
+      "https://github.com/TimsTittus",
       "https://www.linkedin.com/in/tims-tittus"
     ]
   };
@@ -45,11 +44,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={inter.className}>
+      <body className="antialiased">
         <Providers>
           <Layout>{children}</Layout>
         </Providers>
-        <Script src="https://cdn.gpteng.co/gptengineer.js" strategy="afterInteractive" />
       </body>
     </html>
   );
