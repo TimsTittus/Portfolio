@@ -15,15 +15,7 @@ export function HeroV7({ resumeUrl, email }: HeroV7Props) {
   const row = [...SKILLS, ...SKILLS];
 
   const [boost, setBoost] = useState<boolean>(false);
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [stage, setStage] = useState<number>(0);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
 
   useEffect(() => {
     const t1 = setTimeout(() => setStage(1), 250);   // headline rises
@@ -84,40 +76,6 @@ export function HeroV7({ resumeUrl, email }: HeroV7Props) {
 
   return (
     <section className="hero-v7" id="top" data-stage={stage}>
-      {/* Top Navigation */}
-      <div className="v7-topbar">
-        <div className="v7-brand">◆ TIMS</div>
-        <nav className="v7-nav">
-          <Link href="/projects">PROJECTS</Link>
-          <Link href="/blog">BLOG</Link>
-          <a href="#about">ABOUT</a>
-          <a href={resumeUrl} target="_blank" rel="noreferrer">RESUME</a>
-        </nav>
-        <a href={`mailto:${email}`} className="v7-hire">
-          // HIRE ME <span className="v7-hire-circle">↗</span>
-        </a>
-        <button
-          className={`v7-burger ${menuOpen ? 'is-open' : ''}`}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      <div className={`v7-mobile-menu ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
-        <Link href="/projects" onClick={() => setMenuOpen(false)}>PROJECTS</Link>
-        <Link href="/blog" onClick={() => setMenuOpen(false)}>BLOG</Link>
-        <a href="#about" onClick={() => setMenuOpen(false)}>ABOUT</a>
-        <a href={resumeUrl} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>RESUME ↗</a>
-        <a href={`mailto:${email}`} className="v7-mobile-hire" onClick={() => setMenuOpen(false)}>
-          // HIRE ME <span className="v7-hire-circle">↗</span>
-        </a>
-      </div>
-
       {/* Background Watermark */}
       <div className="v7-watermark" aria-hidden="true">
         <span className="v7-watermark-word">TIMS</span>

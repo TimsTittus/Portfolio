@@ -11,6 +11,19 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
+  const isHome = pathname === '/';
+
+  if (isHome) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white overflow-x-hidden">
+        <Navbar />
+        <main className="flex-grow px-0 pt-0 pb-0">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-nb-cream overflow-x-hidden">

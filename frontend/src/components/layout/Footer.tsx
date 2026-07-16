@@ -1,51 +1,27 @@
 import React from 'react';
-import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-nb-cream border-t-4 border-nb-black py-12">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="text-center md:text-left">
-            <p className="text-nb-black font-black text-lg uppercase tracking-wider">&copy; {new Date().getFullYear()} – Tims Tittus</p>
-            <p className="text-nb-black/60 font-bold text-sm">Polymath & Engineer</p>
+    <footer className="w-full bg-transparent py-8 mt-auto">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="border-t border-black/10 dark:border-white/10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono text-[10px] md:text-[11px] tracking-[0.2em] text-[#666] dark:text-[#999] uppercase font-medium">
+          <div className="font-bold text-[#222] dark:text-[#eee]">
+            © {new Date().getFullYear()} · TIMS TITTUS
           </div>
-
-          <div className="flex items-center space-x-4">
-            {[
-              { icon: <Github size={24} />, href: "https://github.com/TimsTittus", label: "GitHub" },
-              { icon: <Linkedin size={24} />, href: "https://www.linkedin.com/in/tims-tittus/", label: "LinkedIn" },
-              { icon: <Mail size={24} />, href: "mailto:timstittus1@gmail.com", label: "Email" }
-            ].map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="p-3 bg-white border-2 border-nb-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-nb-black hover:bg-nb-purple"
-              >
-                {social.icon}
-              </a>
-            ))}
+          <div className="flex items-center gap-5 text-[#666] dark:text-[#999]">
+            <a href="https://github.com/TimsTittus" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6A1A] transition-colors" aria-label="GitHub">
+              <Github size={15} />
+            </a>
+            <a href="https://www.linkedin.com/in/tims-tittus/" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6A1A] transition-colors" aria-label="LinkedIn">
+              <Linkedin size={15} />
+            </a>
+            <a href="mailto:timstittus1@gmail.com" className="hover:text-[#FF6A1A] transition-colors" aria-label="Email">
+              <Mail size={15} />
+            </a>
           </div>
-
-          <div className="hidden md:block">
-            <nav>
-              <ul className="flex space-x-8">
-                {['Home', 'About', 'Contact'].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                      className="text-nb-black font-bold uppercase hover:text-nb-purple transition-colors underline decoration-2 underline-offset-4"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+          <div className="flex items-center gap-1.5">
+            BUILT WITH CARE · MONSTER & COFFEE · <span className="text-[#FF6A1A]">◆</span>
           </div>
         </div>
       </div>
