@@ -45,38 +45,43 @@ export default function ExperiencePage() {
             Work Experience
           </h2>
 
-          <div className="space-y-12">
-            {workExperience.map((job) => (
-              <div
-                key={job.id}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-nb-black translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 group-hover:translate-x-2 group-hover:translate-y-2 transition-all"></div>
-                <div className="relative bg-white border-4 border-nb-black p-6 sm:p-8 group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all">
-                  <div className="flex flex-col md:flex-row md:items-start gap-8">
-                    <div className="md:w-1/3">
-                      <h3 className="text-3xl font-black uppercase tracking-tight text-nb-black">{job.title}</h3>
-                      <div className="flex items-center font-black uppercase text-xs mt-3 gap-2">
-                        <div className="px-3 py-1 bg-nb-purple border-2 border-nb-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-nb-black flex items-center gap-2">
-                          <Building size={14} strokeWidth={3} />
-                          <span>{job.company}</span>
+          <div className="exp-timeline">
+            {workExperience.map((job, i) => (
+              <div key={job.id} className="exp-item">
+                {/* Left timeline period */}
+                <div className="exp-left">
+                  <span className="exp-period">{job.period}</span>
+                  <div className="exp-dot-container">
+                    <span className="exp-dot-main" />
+                    {i < workExperience.length - 1 && <span className="exp-line-main" />}
+                  </div>
+                </div>
+
+                {/* Right content card */}
+                <div className="exp-right">
+                  {/* Company Header */}
+                  <div className="exp-company-header">
+                    <div className="exp-logo-wrapper">
+                      <Building className="w-5 h-5 text-nb-black" />
+                    </div>
+                    <div className="exp-company-info">
+                      <h3 className="exp-company-name">{job.company}</h3>
+                      <span className="exp-company-type">Work Experience</span>
+                    </div>
+                  </div>
+
+                  {/* Subroles */}
+                  <div className="exp-subroles has-single">
+                    <div className="exp-subrole-item">
+                      <div className="exp-subrole-header">
+                        <div>
+                          <h4 className="exp-role-title">{job.title}</h4>
                         </div>
                       </div>
-                      <div className="flex items-center text-nb-black/60 font-bold text-sm mt-2">
-                        <Calendar size={18} className="mr-2" strokeWidth={3} />
-                        <span>{job.period}</span>
-                      </div>
-                    </div>
-
-                    <div className="md:w-2/3">
-                      <p className="text-lg sm:text-xl font-bold text-nb-black mb-6 leading-relaxed bg-nb-cream p-4 border-l-4 border-nb-purple">{job.description}</p>
-                      <h4 className="text-lg font-black uppercase mb-4 text-nb-black underline decoration-4 underline-offset-4">Key Responsibilities:</h4>
-                      <ul className="space-y-3">
-                        {job.responsibilities.map((responsibility, i) => (
-                          <li key={i} className="flex items-start gap-3 text-nb-black font-medium leading-relaxed">
-                            <span className="mt-1 w-2 h-2 bg-nb-black flex-shrink-0"></span>
-                            {responsibility}
-                          </li>
+                      {job.description && <p className="exp-description">{job.description}</p>}
+                      <ul className="exp-role-bullets">
+                        {job.responsibilities.map((responsibility, k) => (
+                          <li key={k}>{responsibility}</li>
                         ))}
                       </ul>
                     </div>
@@ -95,36 +100,43 @@ export default function ExperiencePage() {
             Volunteering
           </h2>
 
-          <div className="grid grid-cols-1 gap-12">
-            {volunteeringExperience.map((job) => (
-              <div
-                key={job.id}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-nb-black translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-all"></div>
-                <div className="relative bg-white border-4 border-nb-black p-6 sm:p-8 group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all">
-                  <div className="flex flex-col md:flex-row md:items-start gap-8">
-                    <div className="md:w-1/3">
-                      <h3 className="text-2xl font-black uppercase tracking-tight text-nb-black">{job.title}</h3>
-                      <div className="flex items-center font-black uppercase text-xs mt-3 gap-2">
-                        <div className="px-3 py-1 bg-nb-green border-2 border-nb-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-nb-black flex items-center gap-2">
-                          <Building size={14} strokeWidth={3} />
-                          <span>{job.company}</span>
+          <div className="exp-timeline">
+            {volunteeringExperience.map((job, i) => (
+              <div key={job.id} className="exp-item">
+                {/* Left timeline period */}
+                <div className="exp-left">
+                  <span className="exp-period">{job.period}</span>
+                  <div className="exp-dot-container">
+                    <span className="exp-dot-main" />
+                    {i < volunteeringExperience.length - 1 && <span className="exp-line-main" />}
+                  </div>
+                </div>
+
+                {/* Right content card */}
+                <div className="exp-right">
+                  {/* Company Header */}
+                  <div className="exp-company-header">
+                    <div className="exp-logo-wrapper">
+                      <Award className="w-5 h-5 text-nb-black" />
+                    </div>
+                    <div className="exp-company-info">
+                      <h3 className="exp-company-name">{job.company}</h3>
+                      <span className="exp-company-type">Volunteering</span>
+                    </div>
+                  </div>
+
+                  {/* Subroles */}
+                  <div className="exp-subroles has-single">
+                    <div className="exp-subrole-item">
+                      <div className="exp-subrole-header">
+                        <div>
+                          <h4 className="exp-role-title">{job.title}</h4>
                         </div>
                       </div>
-                      <div className="flex items-center text-nb-black/60 font-bold text-sm mt-2">
-                        <Calendar size={18} className="mr-2" strokeWidth={3} />
-                        <span>{job.period}</span>
-                      </div>
-                    </div>
-
-                    <div className="md:w-2/3">
-                      <p className="text-lg font-bold text-nb-black mb-4 leading-relaxed">{job.description}</p>
-                      <ul className="grid grid-cols-1 gap-2">
-                        {job.responsibilities.map((responsibility, i) => (
-                          <li key={i} className="text-nb-black/70 font-bold text-sm bg-nb-cream px-3 py-1 border-2 border-nb-black">
-                            {responsibility}
-                          </li>
+                      {job.description && <p className="exp-description">{job.description}</p>}
+                      <ul className="exp-role-bullets">
+                        {job.responsibilities.map((responsibility, k) => (
+                          <li key={k}>{responsibility}</li>
                         ))}
                       </ul>
                     </div>
