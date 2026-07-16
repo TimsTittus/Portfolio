@@ -32,13 +32,17 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://portf-vq7c.onrender.com/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL
+          ? `${process.env.NEXT_PUBLIC_API_URL}/api/contact`
+          : 'https://portf-backend.timstittus1.workers.dev/api/contact',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
       if (!response.ok) throw new Error('Failed to send message');
 
