@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { name: 'PROJECTS', path: '/projects' },
-  { name: 'BLOG', path: '/blog' },
   { name: 'ABOUT', path: '/#about' },
   { name: 'EXPERIENCE', path: '/experience' },
   { name: 'GALLERY', path: '/gallery' },
+  { name: 'BLOG', path: '/blog' },
   { name: 'CONTACT', path: '/contact' },
   { name: 'RESUME', path: '/assets/Resume.pdf', external: true },
 ];

@@ -5,6 +5,8 @@ import { HeroV7 } from '@/components/home/HeroV7';
 import { About } from '@/components/home/About';
 import { Stack } from '@/components/home/Stack';
 import { Experience } from '@/components/home/Experience';
+import { FeaturedWork } from '@/components/home/FeaturedWork';
+import { MoreProjects } from '@/components/home/MoreProjects';
 
 const marqueeDomains = [
   'LangChain', 'Python', 'RAG', 'MCP', 'FastAPI',
@@ -36,10 +38,10 @@ export default function Home() {
       </div>
 
       <About />
-
       <Stack />
-
       <Experience />
+      <FeaturedWork />
+      <MoreProjects />
     </div>
   );
 }

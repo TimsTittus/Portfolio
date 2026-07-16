@@ -7,7 +7,7 @@ import { Building } from 'lucide-react';
 
 export function Experience() {
   return (
-    <section className="section experience" id="experience">
+    <section className="section experience pb-8" id="experience">
       <SectionHeader num="03" label="Experience" bleed="EXPERIENCE" bleedStyle="outline" />
 
       <div className="exp-timeline">
