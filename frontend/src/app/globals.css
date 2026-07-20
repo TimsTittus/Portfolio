@@ -501,9 +501,7 @@
     v7-watermark-pulse 2s steps(2, jump-none) 1.2s infinite;
 }
 
-.hero-v7[data-stage="4"] .v7-watermark {
-  animation: v7-watermark-zorder 2s steps(2, jump-none) 1.2s infinite;
-}
+
 
 @keyframes v7-watermark-shrink {
   from {
@@ -527,16 +525,6 @@
   }
 }
 
-@keyframes v7-watermark-zorder {
-  0% {
-    z-index: 1;
-  }
-
-  100% {
-    z-index: 5;
-  }
-}
-
 /* PORTRAIT */
 .hero-v7 .v7-portrait {
   position: absolute;
@@ -545,7 +533,7 @@
   transform: translateX(-50%);
   width: clamp(560px, 60vw, 960px);
   height: clamp(740px, 95vh, 1140px);
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   display: flex;
   align-items: flex-end;
@@ -577,7 +565,7 @@
   left: 0;
   right: 0;
   top: clamp(56px, 7vh, 96px);
-  z-index: 4;
+  z-index: 2;
   margin: 0;
   text-align: center;
   font-family: 'Anton', 'Bebas Neue', 'Archivo Black', system-ui, sans-serif;
@@ -878,8 +866,8 @@
     justify-content: center;
     align-items: center;
     flex: 0 0 auto;
-    order: 3;
-    margin-top: -140px;
+    order: 4;
+    margin-top: 48px;
     overflow: hidden;
   }
 
@@ -893,22 +881,18 @@
     animation: v7-watermark-pulse 2s steps(2, jump-none) 1.2s infinite;
   }
 
-  .hero-v7[data-stage="4"] .v7-watermark {
-    animation: v7-watermark-zorder 2s steps(2, jump-none) 1.2s infinite;
-  }
-
   .hero-v7 .v7-tagline {
     position: relative;
     left: auto;
     right: auto;
     top: auto;
     bottom: auto;
-    padding: 10px 22px 0;
+    padding: 28px 22px 0;
     font-size: 11px;
     line-height: 1.6;
     text-shadow: none;
     flex: 0 0 auto;
-    order: 4;
+    order: 2;
   }
 
   .hero-v7 .v7-tagline-indent {
@@ -947,7 +931,7 @@
     text-shadow: none;
     opacity: .95;
     flex: 0 0 auto;
-    order: 5;
+    order: 3;
   }
 
   .hero-v7 .v7-bio-indent {
@@ -965,8 +949,9 @@
     height: auto;
     flex: 1 1 auto;
     min-height: 380px;
-    margin-top: 16px;
-    order: 2;
+    margin-top: -100px;
+    margin-bottom: 20px;
+    order: 5;
   }
 
   .hero-v7 .v7-avatar {
@@ -1792,6 +1777,126 @@
   }
 
   .proj-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* --- HOME BLOG SECTION --- */
+.home-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .home-blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.blog-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  background: #FAF6F0;
+  border: 1px solid var(--line);
+  padding: 32px;
+  min-height: 240px;
+  height: 100%;
+  transition: all .5s cubic-bezier(.2, .7, .2, 1);
+  position: relative;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--line-2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.blog-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.blog-card-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--ink-2);
+  text-transform: uppercase;
+}
+
+.blog-card-badge {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 4px 10px;
+  border-radius: 100px;
+  line-height: 1;
+}
+
+.blog-card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.blog-card-title {
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+
+.blog-card-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.blog-card-footer {
+  display: flex;
+  align-items: center;
+}
+
+.blog-card-read-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s ease;
+}
+
+.blog-card-link:hover .blog-card-read-link {
+  gap: 12px;
+}
+
+@media (hover: none) {
+  .blog-card:hover {
     transform: none;
     box-shadow: none;
   }
