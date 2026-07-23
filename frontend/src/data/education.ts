@@ -13,18 +13,6 @@ export const education: Education[] = [
     color: "bg-nb-purple"
   },
   {
-    title: "Minor in Robotics & Automation",
-    loc: "SJCET Palai • 2023-2027",
-    desc: "Specialized in robotic system design, control algorithms, sensor integration, and autonomous navigation.",
-    color: "bg-nb-blue"
-  },
-  {
-    title: "Honors Degree in Cybersecurity",
-    loc: "SJCET Palai • 2023-2027",
-    desc: "Advanced coursework and specialized research in cybersecurity, focusing on emerging threats and defensive architectures.",
-    color: "bg-nb-pink"
-  },
-  {
     title: "Higher Secondary Education",
     loc: "St Marys Convent School • 2021-2023",
     desc: "Focused on Mathematics, Physics, and Computer Science.",
