@@ -83,7 +83,7 @@ export function HeroV7({ resumeUrl, email }: HeroV7Props) {
 
       {/* Portrait Photo */}
       <div className="v7-portrait">
-        <img className="v7-avatar" src="/assets/tims.png" alt="Tims" loading="eager" decoding="async" />
+        <img className="v7-avatar" src="/assets/tims.webp" alt="Tims" loading="eager" decoding="async" />
       </div>
 
       {/* Headline */}
