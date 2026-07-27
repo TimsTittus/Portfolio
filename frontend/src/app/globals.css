@@ -1086,7 +1086,7 @@
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--ink-2);
+  color: var(--accent);
   border-bottom: 1px solid var(--line);
   padding-bottom: 8px;
   margin: 0;
@@ -1140,7 +1140,7 @@
 .exp-item {
   display: grid;
   grid-template-columns: 200px 1fr;
-  align-items: start;
+  align-items: stretch;
 }
 
 .exp-item:last-child .exp-right {
@@ -1150,7 +1150,7 @@
 .exp-left {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
   padding: 48px 0;
 }
@@ -1162,6 +1162,7 @@
   text-transform: uppercase;
   color: var(--ink-2);
   white-space: nowrap;
+  margin-top: 2px;
 }
 
 .exp-dot-container {
@@ -1187,10 +1188,13 @@
   position: absolute;
   top: 14px;
   bottom: -48px;
-  /* extends into the padding of next item */
   width: 1px;
   background-color: var(--line);
   z-index: 1;
+}
+
+.exp-item:last-child .exp-line-main {
+  bottom: 0;
 }
 
 .exp-right {

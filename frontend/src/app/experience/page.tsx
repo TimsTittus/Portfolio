@@ -36,7 +36,7 @@ const SkillCategoryCard = ({
       <div className="w-8 h-8 rounded-lg bg-[#FF6A1A]/10 text-[#FF6A1A] flex items-center justify-center">
         <Icon className="w-4 h-4" />
       </div>
-      <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-black/70">{title}</h3>
+      <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-[#FF6A1A]">{title}</h3>
     </div>
     <div className="flex flex-wrap gap-2">
       {skills.map((skill) => (
@@ -90,12 +90,12 @@ export default function ExperiencePage() {
 
         <div className="exp-timeline">
           {workExperience.map((job, i) => (
-            <div key={job.id} className="exp-item">
+            <div key={job.title} className="exp-item">
               <div className="exp-left">
                 <span className="exp-period">{job.period}</span>
                 <div className="exp-dot-container">
                   <span className="exp-dot-main" />
-                  {i < workExperience.length - 1 && <span className="exp-line-main" />}
+                  <span className="exp-line-main" />
                 </div>
               </div>
 
@@ -143,12 +143,12 @@ export default function ExperiencePage() {
 
         <div className="exp-timeline">
           {volunteeringExperience.map((job, i) => (
-            <div key={job.id} className="exp-item">
+            <div key={job.title} className="exp-item">
               <div className="exp-left">
                 <span className="exp-period">{job.period}</span>
                 <div className="exp-dot-container">
                   <span className="exp-dot-main" />
-                  {i < volunteeringExperience.length - 1 && <span className="exp-line-main" />}
+                  <span className="exp-line-main" />
                 </div>
               </div>
 

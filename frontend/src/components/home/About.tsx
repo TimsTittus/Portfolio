@@ -55,7 +55,7 @@ export function About() {
             {[
               { n: 15, suf: '+', l: 'Projects Built' },
               { n: 5, suf: '+', l: 'Hackathons & Competitions' },
-              { n: 8, suf: '+', l: 'Leadership Roles' },
+              { n: 10, suf: '+', l: 'Leadership Roles' },
               { n: 5, suf: '+', l: 'Communities Led' },
             ].map((s, i) => (
               <Reveal key={s.l} delay={500 + i * 80} className="stat">

@@ -12,13 +12,13 @@ export function Experience() {
 
       <div className="exp-timeline">
         {workExperience.map((job, i) => (
-          <Reveal key={job.id} delay={100 + i * 150} y={30} className="exp-item">
+          <Reveal key={job.title} delay={100 + i * 150} y={30} className="exp-item">
             {/* Left timeline period */}
             <div className="exp-left">
               <span className="exp-period">{job.period}</span>
               <div className="exp-dot-container">
                 <span className="exp-dot-main" />
-                {i < workExperience.length - 1 && <span className="exp-line-main" />}
+                <span className="exp-line-main" />
               </div>
             </div>
 

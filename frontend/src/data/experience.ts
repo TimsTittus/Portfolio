@@ -1,5 +1,4 @@
 export interface Experience {
-  id: number;
   title: string;
   company: string;
   period: string;
@@ -9,46 +8,42 @@ export interface Experience {
 
 export const workExperience: Experience[] = [
   {
-    id: 1,
-    title: 'Web Master',
-    company: 'IEEE SB SJCET',
-    period: 'April 2025 - Present',
-    description: 'Maintain and develop the IEEE SB SJCET websites, ensuring reliable performance, clear design, and up-to-date event details.',
+    title: 'Security Product Tester (Intern)',
+    company: 'Algomox Pvt Ltd',
+    period: 'May 2026 – Jul 2026',
+    description: 'Evaluated enterprise cybersecurity platforms (EDR, NDR, SIEM, SOC) through rigorous functional, security, and regression testing across staging environments to guarantee system resilience and release readiness.',
     responsibilities: [
-      'Maintained and updated the IEEE SB SJCET websites with event content',
-      'Resolved technical issues and optimized performance (40% faster load times)',
-      'Designed accessible pages and mentored junior developers'
+      'Executed end-to-end functional, security, and regression testing on enterprise cybersecurity solutions and AI-driven SOC platforms.',
+      'Identified, documented, and reproduced complex threat detection failures, vulnerability edge cases, and usability defects across staging environments.',
+      'Collaborated directly with engineering and product teams to validate patches, optimize model detection reliability, and enforce release quality standards.'
     ]
   },
   {
-    id: 2,
-    title: 'MERN Stack Developer',
-    company: 'BRIK Community – Remote',
-    period: 'June 2025 – Present',
-    description: 'Develop scalable full-stack web applications with optimized performance, strong security, and excellent user experience.',
+    title: 'Developer (HAC\'KP)',
+    company: 'Kerala Police Cyberdome',
+    period: '2025 – 2026',
+    description: 'Engineered critical digital forensics and crowdsourcing platforms for law enforcement, utilizing perceptual hashing to accelerate cyber investigations and secure case monitoring.',
     responsibilities: [
-      'Build and optimize community web projects with the MERN stack (MongoDB, Express.js, React, Node.js)',
-      'Collaborate in student teams on real-world full-stack applications',
-      'Improve site performance, cutting load times by 30%'
+      'Engineered a responsive CSAM Takedown and Trace Dashboard integrating client-side PhotoDNA perceptual hashing for secure case monitoring.',
+      'Developed a Europol-inspired "Trace an Object" crowdsourcing platform to aggregate analyst leads and streamline structured victim reporting.',
+      'Built secure data pipelines for rapid threat mitigation, supporting digital investigations for global policing agencies.'
     ]
   },
   {
-    id: 3,
-    title: 'Mentor, Internship',
-    company: 'TheNexusProject (SJCET Bootcamp)',
-    period: 'June 2025 – July 2025',
-    description: 'Led student interns in creating a lightweight web platform with optimized UI/UX, frontend, and backend workflows.',
+    title: 'Independent Product Designer',
+    company: 'Independent Projects',
+    period: '2025 – Present',
+    description: 'Lead end-to-end product design for diverse web platforms, focusing on user-centric interfaces, scalable design systems, and responsive layouts.',
     responsibilities: [
-      'Mentored interns through UI/UX, frontend, and backend development best practices',
-      'Reviewed progress, gave technical feedback, and resolved issues across the development cycle',
-      'Guided project planning and code reviews to deliver a functional web platform'
+      'Designed and prototyped responsive web interfaces featuring custom visual identities and interactive components.',
+      'Led end-to-end product design for operational platforms, streamlining complex user journeys and data-heavy dashboards.',
+      'Developed scalable design systems, establishing clear typography, color palettes, and content hierarchies across multiple applications.'
     ]
   },
   {
-    id: 4,
     title: 'Assistant Network Technician',
     company: 'ITTA Cable Network – Kozhichal, Kannur',
-    period: 'February 2022 – August 2024',
+    period: 'Feb 2022 – Aug 2024',
     description: 'Managed and optimized fiber network infrastructure for reliable, automated connectivity.',
     responsibilities: [
       'Configure and optimize OLTs, routers, and fiber networks for high performance',
@@ -61,22 +56,42 @@ export const workExperience: Experience[] = [
 
 export const volunteeringExperience: Experience[] = [
   {
-    id: 1,
-    title: 'College Lead',
-    company: 'HackTheBox Kerala',
-    period: 'Mar 2025 - June 2025',
-    description: 'Manage cybersecurity events, including CTFs and workshops, to build ethical hacking skills and promote awareness with HackTheBox Kerala.',
+    title: 'Chief Technology Officer (CTO)',
+    company: 'IEDC SJCET',
+    period: 'Mar 2026 – Present',
+    description: 'Spearheading technical strategy and system architecture for campus startup ventures while mentoring engineering teams in AI/ML integration and scalable full-stack development.',
     responsibilities: [
-      'Manage cybersecurity activities and encourage hacking skills on campus',
-      'Run CTFs, workshops, and practical sessions to build ethical hacking skills',
-      'Work with HackTheBox Kerala to raise cybersecurity awareness'
+      'Direct technical strategy, stack selection, and system architecture for student startup initiatives and innovation projects.',
+      'Mentor developer teams in AI/ML fundamentals, API integration, and production-grade full-stack software development.',
+      'Establish technical guidelines for system performance, security best practices, and scalable cloud deployments across campus ventures.'
     ]
   },
   {
-    id: 2,
+    title: 'Web Master',
+    company: 'IEEE SB SJCET',
+    period: 'Apr 2025 - Present',
+    description: 'Maintain and develop the IEEE SB SJCET websites, ensuring reliable performance, clear design, and up-to-date event details.',
+    responsibilities: [
+      'Maintained and updated the IEEE SB SJCET websites with event content',
+      'Resolved technical issues and optimized performance (40% faster load times)',
+      'Designed accessible pages and mentored junior developers'
+    ]
+  },
+  {
+    title: 'Cybersecurity Analyst',
+    company: 'RoomNumber404',
+    period: 'Jul 2025 – Present',
+    description: 'Secured community websites and platform integrity through team coordination and secure coding, while conducting cybersecurity workshops.',
+    responsibilities: [
+      'Secured community websites and maintained platform integrity through secure coding practices',
+      'Coordinated with teams to identify and resolve vulnerabilities',
+      'Conducted cybersecurity workshops to build security awareness'
+    ]
+  },
+  {
     title: 'Lead',
     company: 'TheNexusProject (FOSS Club)',
-    period: 'June 2025 – Present',
+    period: 'Jun 2025 – Oct 2025',
     description: 'Support open-source projects and cybersecurity programs through events, workshops, and community work at The Nexus Project.',
     responsibilities: [
       'Organized FOSS workshops and technical sessions to promote open-source culture',
@@ -85,10 +100,42 @@ export const volunteeringExperience: Experience[] = [
     ]
   },
   {
-    id: 3,
+    title: 'Mentor, Internship',
+    company: 'TheNexusProject (FOSS Club)',
+    period: 'Jun 2025 – Jul 2025',
+    description: 'Led student interns in creating a lightweight web platform with optimized UI/UX, frontend, and backend workflows.',
+    responsibilities: [
+      'Mentored interns through UI/UX, frontend, and backend development best practices',
+      'Reviewed progress, gave technical feedback, and resolved issues across the development cycle',
+      'Guided project planning and code reviews to deliver a functional web platform'
+    ]
+  },
+  {
+    title: 'MERN Stack Developer',
+    company: 'BRIK Community – Remote',
+    period: 'Jun 2025 – May 2026',
+    description: 'Develop scalable full-stack web applications with optimized performance, strong security, and excellent user experience.',
+    responsibilities: [
+      'Build and optimize community web projects with the MERN stack (MongoDB, Express.js, React, Node.js)',
+      'Collaborate in student teams on real-world full-stack applications',
+      'Improve site performance, cutting load times by 30%'
+    ]
+  },
+  {
+    title: 'College Lead',
+    company: 'HackTheBox Kerala',
+    period: 'Mar 2025 - Jun 2025',
+    description: 'Manage cybersecurity events, including CTFs and workshops, to build ethical hacking skills and promote awareness with HackTheBox Kerala.',
+    responsibilities: [
+      'Manage cybersecurity activities and encourage hacking skills on campus',
+      'Run CTFs, workshops, and practical sessions to build ethical hacking skills',
+      'Work with HackTheBox Kerala to raise cybersecurity awareness'
+    ]
+  },
+  {
     title: 'IPR & Research Lead',
     company: 'Startup Bootcamp SJCET – IEDC',
-    period: 'January 2025 – Present',
+    period: 'Jan 2025 – Jan 2026',
     description: 'Lead IP and research efforts to support student-led innovations and startup initiatives within SJCET’s Startup Bootcamp.',
     responsibilities: [
       'Guided teams in patent drafting, prior art searches, and technical documentation',
@@ -97,10 +144,9 @@ export const volunteeringExperience: Experience[] = [
     ]
   },
   {
-    id: 4,
     title: 'Vice-Chairperson',
     company: 'IEEE SIGHT SB SJCET',
-    period: 'April 2025 – Present',
+    period: 'Apr 2025 – Apr 2026',
     description: 'Helpplan and run IEEE SIGHT community outreach projects.',
     responsibilities: [
       'Organize and manage IEEE SIGHT community projects and outreach programs',
@@ -109,10 +155,9 @@ export const volunteeringExperience: Experience[] = [
     ]
   },
   {
-    id: 5,
     title: 'CyberLead, Core Team Member',
     company: 'TheNexusProject (FOSS Club)',
-    period: 'November 2024 – Present',
+    period: 'Nov 2024 – Present',
     description: 'Support open-source and cybersecurity projects through events, workshops, and community work at The Nexus Project.',
     responsibilities: [
       'Organized FOSS workshops and technical sessions to promote open-source culture',
@@ -121,10 +166,9 @@ export const volunteeringExperience: Experience[] = [
     ]
   },
   {
-    id: 6,
     title: 'Graphic Designer',
     company: 'IEEE SB SJCET',
-    period: 'May 2024 – March 2025',
+    period: 'May 2024 – Mar 2025',
     description: 'Created visual content for IEEE SB SJCET events, ensuring brand consistency and on-time delivery.',
     responsibilities: [
       'Designed event posters, social media graphics, and promotional materials',
