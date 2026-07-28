@@ -70,6 +70,7 @@ export const BlogClientList: React.FC<BlogClientListProps> = ({ posts }) => {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
+                        timeZone: 'UTC',
                       })}
                     </span>
                     <span>•</span>
@@ -127,6 +128,7 @@ export const BlogClientList: React.FC<BlogClientListProps> = ({ posts }) => {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
+              timeZone: 'UTC',
             });
 
             return (

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface HeroV7Props {
   resumeUrl: string;
@@ -83,7 +84,14 @@ export function HeroV7({ resumeUrl, email }: HeroV7Props) {
 
       {/* Portrait Photo */}
       <div className="v7-portrait">
-        <img className="v7-avatar" src="/assets/tims.webp" alt="Tims" loading="eager" decoding="async" />
+        <Image
+          className="v7-avatar"
+          src="/assets/tims.webp"
+          alt="Tims Tittus"
+          fill
+          sizes="(max-width: 768px) 100vw, 75vw"
+          priority
+        />
       </div>
 
       {/* Headline */}

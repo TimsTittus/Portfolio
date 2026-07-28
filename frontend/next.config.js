@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
+  },
+  turbopack: {},
   webpack: (config, { dev }) => {
-    // Disable Webpack cache in development to prevent stale compiler states and stuck error caches
     if (dev) {
       config.cache = false;
     }

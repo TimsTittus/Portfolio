@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 import { galleryItems, galleryCategories, GalleryItem } from '@/data/gallery';
 import { Maximize2, X, ChevronLeft, ChevronRight, Calendar, MapPin, Tag } from 'lucide-react';
 
@@ -8,10 +9,12 @@ export const GalleryClient: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
 
-  // Filter items based on selected category
-  const filteredItems = selectedCategory === 'ALL'
-    ? galleryItems
-    : galleryItems.filter(item => item.category.toUpperCase() === selectedCategory);
+  // Filter items based on selected category (memoized for performance)
+  const filteredItems = useMemo(() => {
+    return selectedCategory === 'ALL'
+      ? galleryItems
+      : galleryItems.filter(item => item.category.toUpperCase() === selectedCategory);
+  }, [selectedCategory]);
 
   const activeIndex = activeItem ? filteredItems.findIndex(i => i.id === activeItem.id) : -1;
 
@@ -88,12 +91,12 @@ export const GalleryClient: React.FC = () => {
           >
             {/* Image Container */}
             <div className="relative aspect-[4/3] overflow-hidden bg-black/5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={item.src}
                 alt={item.title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Gradient Overlay */}
@@ -180,11 +183,12 @@ export const GalleryClient: React.FC = () => {
           >
             {/* Image Preview Container */}
             <div className="flex-1 bg-black flex items-center justify-center p-4 min-h-[300px] md:min-h-[500px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={activeItem.src}
                 alt={activeItem.title}
-                className="max-w-full max-h-[70vh] object-contain rounded-xl"
+                width={1200}
+                height={800}
+                className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-xl"
               />
             </div>
 

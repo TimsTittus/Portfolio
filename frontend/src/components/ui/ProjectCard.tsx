@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { ExternalLink, Github } from 'lucide-react';
 import { Project } from '../../data/projects';
 
@@ -22,10 +23,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, idx }) => {
         {/* Image Container with bold bottom border */}
         <div className="relative h-52 border-b-4 border-nb-black overflow-hidden flex-shrink-0">
           {project.imageUrl ? (
-            <img
+            <Image
               src={project.imageUrl}
               alt={project.title}
-              className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
             />
           ) : (
             <div className={`w-full h-full flex items-center justify-center ${accentColor}`}>

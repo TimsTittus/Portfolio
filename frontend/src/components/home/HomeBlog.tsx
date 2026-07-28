@@ -28,6 +28,7 @@ export const HomeBlog: React.FC = () => {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
+            timeZone: 'UTC',
           }).toUpperCase();
 
           const isNew = index === 0;

@@ -46,7 +46,7 @@ export default function ProjectsClient() {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Tims Tittus",
-    "url": "https://timstittus.vercel.app",
+    "url": "https://timstittus.com",
     "sameAs": [
       "https://github.com/TimsTittus",
       "https://www.linkedin.com/in/tims-tittus/"

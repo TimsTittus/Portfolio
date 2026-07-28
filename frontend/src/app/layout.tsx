@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Tims Tittus",
     description: "Portfolio",
     type: "website",
-    url: "https://timstittus.vercel.app",
+    url: "https://timstittus.com",
   },
   icons: {
     icon: "/assets/favicon.ico",
@@ -29,7 +29,7 @@ export default function RootLayout({
     "@type": "Person",
     "name": "Tims Tittus",
     "jobTitle": ["CyberSecurity Student", "Engineer", "AI Enthusiast", "Polymath"],
-    "url": "https://timstittus.vercel.app",
+    "url": "https://timstittus.com",
     "sameAs": [
       "https://github.com/TimsTittus",
       "https://www.linkedin.com/in/tims-tittus"
@@ -39,7 +39,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Preconnect to Google Fonts for faster font loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
