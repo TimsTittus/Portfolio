@@ -2,6 +2,49 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import Layout from "@/components/layout/Layout";
+import { Inter, JetBrains_Mono, Anton, Archivo_Black, Comic_Neue, Bebas_Neue } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-jetbrains-mono",
+});
+
+const anton = Anton({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-anton",
+});
+
+const archivoBlack = Archivo_Black({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-archivo-black",
+});
+
+const comicNeue = Comic_Neue({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-comic-neue",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-bebas-neue",
+});
 
 export const metadata: Metadata = {
   title: "Tims Tittus | CyberSecurity Student & Polymath",
@@ -36,21 +79,18 @@ export default function RootLayout({
     ]
   };
 
+  const fontVars = `${inter.variable} ${jetbrainsMono.variable} ${anton.variable} ${archivoBlack.variable} ${comicNeue.variable} ${bebasNeue.variable}`;
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={fontVars}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
-        />
+        <link rel="preload" href="/assets/tims.webp" as="image" type="image/webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         <Providers>
           <Layout>{children}</Layout>
         </Providers>

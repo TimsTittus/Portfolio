@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
         left: 0,
         right: 0,
         zIndex: 9999,
-        pointerEvents: 'none'
+        pointerEvents: menuOpen ? 'auto' : 'none'
       }}
     >
       <div
@@ -70,18 +70,18 @@ const Navbar: React.FC = () => {
           className="v7-topbar"
           style={{
             position: 'relative',
-            background: navBackground,
-            backdropFilter: scrolled ? 'blur(12px)' : 'none',
-            WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+            background: menuOpen ? '#FF6A1A' : navBackground,
+            backdropFilter: scrolled && !menuOpen ? 'blur(12px)' : 'none',
+            WebkitBackdropFilter: scrolled && !menuOpen ? 'blur(12px)' : 'none',
             transition: 'background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease',
-            boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
+            boxShadow: scrolled && !menuOpen ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
             pointerEvents: 'auto',
-            zIndex: 50,
+            zIndex: 100,
             opacity: 1
           }}
         >
           <div className="v7-brand">
-            <Link href="/">◆ TIMS</Link>
+            <Link href="/" onClick={() => setMenuOpen(false)}>◆ TIMS</Link>
           </div>
           <nav className="v7-nav">
             {navLinks.map((link) => (
@@ -110,22 +110,24 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Drawer */}
+        {/* Mobile Navigation Menu Overlay */}
         <div className={`v7-mobile-menu ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
-          {navLinks.map((link) => (
-            link.external ? (
-              <a key={link.name} href={link.path} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
-                {link.name} ↗
-              </a>
-            ) : (
-              <Link key={link.name} href={link.path} onClick={() => setMenuOpen(false)}>
-                {link.name}
-              </Link>
-            )
-          ))}
-          <a href="mailto:timstittus1@gmail.com" className="v7-mobile-hire" onClick={() => setMenuOpen(false)}>
-          // HIRE ME <span className="v7-hire-circle">↗</span>
-          </a>
+          <div className="v7-mobile-menu-content">
+            {navLinks.map((link) => (
+              link.external ? (
+                <a key={link.name} href={link.path} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
+                  {link.name} <span className="v7-link-arrow">↗</span>
+                </a>
+              ) : (
+                <Link key={link.name} href={link.path} onClick={() => setMenuOpen(false)}>
+                  {link.name}
+                </Link>
+              )
+            ))}
+            <a href="mailto:timstittus1@gmail.com" className="v7-mobile-hire" onClick={() => setMenuOpen(false)}>
+              // HIRE ME <span className="v7-hire-circle">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </header>

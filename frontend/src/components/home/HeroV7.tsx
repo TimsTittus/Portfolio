@@ -19,10 +19,10 @@ export function HeroV7({ resumeUrl, email }: HeroV7Props) {
   const [stage, setStage] = useState<number>(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setStage(1), 250);   // headline rises
-    const t2 = setTimeout(() => setStage(2), 1050);  // watermark blooms
-    const t3 = setTimeout(() => setStage(3), 1850);  // portrait slides in
-    const t4 = setTimeout(() => setStage(4), 2350);  // metadata + marquee
+    const t1 = setTimeout(() => setStage(1), 50);    // headline rises
+    const t2 = setTimeout(() => setStage(2), 200);   // watermark blooms
+    const t3 = setTimeout(() => setStage(3), 350);   // portrait slides in
+    const t4 = setTimeout(() => setStage(4), 600);   // metadata + marquee
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
