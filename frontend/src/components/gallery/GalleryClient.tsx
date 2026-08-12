@@ -1,38 +1,34 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { galleryItems, galleryCategories, GalleryItem } from '@/data/gallery';
-import { Maximize2, X, ChevronLeft, ChevronRight, Calendar, MapPin, Tag } from 'lucide-react';
+import { GalleryItem } from '@/data/gallery';
+import { X, ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
 
-export const GalleryClient: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+interface GalleryClientProps {
+  items: GalleryItem[];
+}
+
+export const GalleryClient: React.FC<GalleryClientProps> = ({ items }) => {
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
 
-  // Filter items based on selected category (memoized for performance)
-  const filteredItems = useMemo(() => {
-    return selectedCategory === 'ALL'
-      ? galleryItems
-      : galleryItems.filter(item => item.category.toUpperCase() === selectedCategory);
-  }, [selectedCategory]);
-
-  const activeIndex = activeItem ? filteredItems.findIndex(i => i.id === activeItem.id) : -1;
+  const activeIndex = activeItem ? items.findIndex(i => i.id === activeItem.id) : -1;
 
   const handleNext = useCallback(() => {
-    if (activeIndex >= 0 && activeIndex < filteredItems.length - 1) {
-      setActiveItem(filteredItems[activeIndex + 1]);
-    } else if (filteredItems.length > 0) {
-      setActiveItem(filteredItems[0]);
+    if (activeIndex >= 0 && activeIndex < items.length - 1) {
+      setActiveItem(items[activeIndex + 1]);
+    } else if (items.length > 0) {
+      setActiveItem(items[0]);
     }
-  }, [activeIndex, filteredItems]);
+  }, [activeIndex, items]);
 
   const handlePrev = useCallback(() => {
     if (activeIndex > 0) {
-      setActiveItem(filteredItems[activeIndex - 1]);
-    } else if (filteredItems.length > 0) {
-      setActiveItem(filteredItems[filteredItems.length - 1]);
+      setActiveItem(items[activeIndex - 1]);
+    } else if (items.length > 0) {
+      setActiveItem(items[items.length - 1]);
     }
-  }, [activeIndex, filteredItems]);
+  }, [activeIndex, items]);
 
   // Handle ESC key & arrow key navigation for lightbox
   useEffect(() => {
@@ -59,92 +55,42 @@ export const GalleryClient: React.FC = () => {
     };
   }, [activeItem]);
 
-  return (
-    <div className="space-y-12">
-      {/* Category Filter Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide border-b border-black/10">
-        <Tag className="w-4 h-4 text-[#FF6A1A] shrink-0 mr-2" />
-        {galleryCategories.map((cat) => {
-          const isActive = selectedCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`font-mono text-xs uppercase tracking-wider px-4 py-2 rounded-full transition-all shrink-0 ${isActive
-                ? 'bg-[#FF6A1A] text-white font-bold shadow-md shadow-[#FF6A1A]/20'
-                : 'bg-[#FAF6F0] text-black/70 hover:text-black border border-black/10 hover:border-black/20'
-                }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-20 bg-[#FAF6F0] rounded-2xl border border-black/10">
+        <h3 className="font-['Comic_Neue',cursive] text-2xl font-bold text-black mb-2">No photos yet</h3>
+        <p className="text-black/60 font-sans text-sm">Check back soon for new additions.</p>
       </div>
+    );
+  }
 
+  const hasMeta = Boolean(activeItem?.date || activeItem?.location);
+
+  return (
+    <div>
       {/* Photo Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredItems.map((item) => (
-          <div
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+        {items.map((item, idx) => (
+          <button
             key={item.id}
+            type="button"
             onClick={() => setActiveItem(item)}
-            className="group relative bg-[#FAF6F0] border border-black/10 hover:border-black/20 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
+            className="group relative block w-full p-0 border-0 bg-transparent text-left aspect-[4/3] overflow-hidden cursor-pointer"
+            aria-label={`View ${item.title}`}
           >
-            {/* Image Container */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-black/5">
-              <Image
-                src={item.src}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-85 transition-opacity duration-300" />
-
-              {/* Category Badge & Expand Icon */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#FF6A1A] text-white shadow-sm">
-                  {item.category}
-                </span>
-
-                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Maximize2 className="w-4 h-4" />
-                </div>
-              </div>
-
-              {/* Bottom Caption Overlay on Image */}
-              <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
-                <div className="flex items-center gap-2 font-mono text-[11px] text-white/80 uppercase">
-                  <span>{item.date}</span>
-                  <span>•</span>
-                  <span>{item.location}</span>
-                </div>
-                <h3 className="font-['Comic_Neue',cursive] text-xl font-bold text-white leading-tight">
-                  {item.title}
-                </h3>
-              </div>
-            </div>
-
-            {/* Sub-card metadata strip */}
-            <div className="p-4 bg-[#FAF6F0] border-t border-black/5 flex items-center justify-between">
-              <p className="font-['Inter',sans-serif] text-xs text-black/70 line-clamp-1">
-                {item.description}
-              </p>
-              <span className="font-mono text-[10px] font-bold text-[#FF6A1A] uppercase tracking-wider shrink-0 ml-2 group-hover:translate-x-0.5 transition-transform">
-                VIEW →
-              </span>
-            </div>
-          </div>
+            <Image
+              src={item.src}
+              alt={item.title}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              loading={idx === 0 ? 'eager' : 'lazy'}
+              priority={idx === 0}
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+          </button>
         ))}
       </div>
-
-      {filteredItems.length === 0 && (
-        <div className="text-center py-20 bg-[#FAF6F0] rounded-2xl border border-black/10">
-          <h3 className="font-['Comic_Neue',cursive] text-2xl font-bold text-black mb-2">No photos found</h3>
-          <p className="text-black/60 font-sans text-sm">No photos available under &quot;{selectedCategory}&quot;.</p>
-        </div>
-      )}
 
       {/* Lightbox Modal */}
       {activeItem && (
@@ -195,32 +141,42 @@ export const GalleryClient: React.FC = () => {
             {/* Sidebar Metadata Container */}
             <div className="w-full md:w-80 p-6 md:p-8 bg-[#1f2937] text-white flex flex-col justify-between space-y-6">
               <div>
-                <div className="inline-block font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#FF6A1A] text-white mb-4">
-                  {activeItem.category}
-                </div>
+                {activeItem.category && (
+                  <div className="inline-block font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#FF6A1A] text-white mb-4">
+                    {activeItem.category}
+                  </div>
+                )}
 
                 <h2 className="font-['Comic_Neue',cursive] text-2xl md:text-3xl font-bold text-white mb-4">
                   {activeItem.title}
                 </h2>
 
-                <p className="font-['Inter',sans-serif] text-sm text-gray-300 leading-relaxed mb-6">
-                  {activeItem.description}
-                </p>
+                {activeItem.description && (
+                  <p className="font-['Inter',sans-serif] text-sm text-gray-300 leading-relaxed mb-6">
+                    {activeItem.description}
+                  </p>
+                )}
 
-                <div className="space-y-2 border-t border-gray-700/60 pt-4 font-mono text-xs text-gray-400">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[#FF6A1A]" />
-                    <span>{activeItem.date}</span>
+                {hasMeta && (
+                  <div className="space-y-2 border-t border-gray-700/60 pt-4 font-mono text-xs text-gray-400">
+                    {activeItem.date && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-[#FF6A1A]" />
+                        <span>{activeItem.date}</span>
+                      </div>
+                    )}
+                    {activeItem.location && (
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-[#FF6A1A]" />
+                        <span>{activeItem.location}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#FF6A1A]" />
-                    <span>{activeItem.location}</span>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="font-mono text-[11px] text-gray-500 text-right uppercase tracking-wider">
-                Photo {activeIndex + 1} of {filteredItems.length}
+                Photo {activeIndex + 1} of {items.length}
               </div>
             </div>
           </div>
