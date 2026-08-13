@@ -202,7 +202,79 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     }
   ];
 
-  const postFaqs = post.slug === 'sigma-yara-detection-engineering' ? sigmaYaraFaqs : aiAgentFaqs;
+  const mitreAttackFaqs = [
+    {
+      "@type": "Question",
+      "name": "What is MITRE ATT&CK used for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Structuring threat intelligence, building and prioritizing detection content, planning red and purple team exercises, running gap analysis on existing coverage, and evaluating security products against a shared, vendor-neutral vocabulary of adversary behavior."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is MITRE ATT&CK a framework or a knowledge base?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MITRE describes it as a knowledge base. It documents observed adversary behavior rather than prescribing a methodology or fixed sequence of steps."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a tactic and a technique?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A tactic is the adversary's goal at a given stage — the why. A technique is a specific method for achieving that goal — the how. A sub-technique is a more specific variant of a technique."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is MITRE ATT&CK different from the Cyber Kill Chain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Kill Chain is a linear, seven-stage model of intrusion progression. ATT&CK is a non-linear matrix reflecting how real intrusions actually behave, including looping and skipping stages."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to memorize ATT&CK technique IDs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Understanding the tactic, technique, and sub-technique structure matters more than memorizing codes; the Navigator and official technique pages serve as the reference."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is MITRE ATT&CK Navigator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A free, web-based tool for building color-coded layers over the ATT&CK matrix, used to visualize detection coverage, threat actor behavior, and gap analysis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often is ATT&CK updated, and does the version matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MITRE ships major releases roughly twice a year. Version matters because major releases can restructure tactics, as the April 2026 release did by splitting Defense Evasion into Stealth and Defense Impairment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is MITRE ATT&CK free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is maintained by MITRE, a non-profit organization, and is openly available to any individual or organization at no cost."
+      }
+    }
+  ];
+
+  const postFaqs =
+    post.slug === 'mitre-attack-explained-detection-engineer'
+      ? mitreAttackFaqs
+      : post.slug === 'sigma-yara-detection-engineering'
+        ? sigmaYaraFaqs
+        : aiAgentFaqs;
 
   const jsonLd = {
     "@context": "https://schema.org",
