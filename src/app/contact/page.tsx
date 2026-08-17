@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Clock, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, ArrowUpRight } from 'lucide-react';
 import { toast } from 'sonner';
-import { SectionHeader } from '@/components/home/SectionHeader';
 
 interface FormState {
   name: string;
@@ -67,44 +66,52 @@ export default function ContactPage() {
     { icon: Clock, label: "Hours", value: "Mon - Fri: 9AM - 5PM" }
   ];
 
-  const socialLinks = [
-    { icon: Github, label: "GitHub", href: "https://github.com/TimsTittus" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/tims-tittus/" },
-    { icon: Twitter, label: "Twitter", href: "https://x.com/timstittus" }
-  ];
-
   return (
-    <div className="min-h-screen pb-12 lg:pb-6 px-4 md:px-8 max-w-7xl mx-auto space-y-4">
-      {/* Concise Header */}
-      <div>
-        <div className="[&_.section-header]:mb-3 [&_.section-bleed]:mb-1">
-          <SectionHeader
-            num="07"
-            label="GET IN TOUCH"
-            bleed="CONTACT ▫ CONNECT"
-            bleedStyle="solid"
-          />
-        </div>
+    <div className="min-h-screen pb-0 -mb-8 sm:-mb-12 px-4 md:px-8 max-w-7xl mx-auto space-y-8">
+      <div className="relative pt-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="font-['Bebas_Neue',var(--font-bebas-neue),'Archivo_Black',sans-serif] text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-[#FF6A1A] leading-none uppercase">
+              Contact Me
+            </h1>
+          </div>
 
-        <div className="mb-2">
-          <h1 className="font-['Comic_Neue',cursive] text-3xl md:text-5xl lg:text-4xl font-bold tracking-tight text-black mb-1">
-            Let&apos;s Connect & Collaborate
-          </h1>
-          <p className="font-['Inter',sans-serif] text-sm md:text-base text-black/70 max-w-3xl leading-snug">
-            Feel free to reach out if you have any questions, project inquiries, security consultations, or just want to say hello.
-          </p>
+          <div className="hidden md:block shrink-0 pb-2 pr-6">
+            <svg
+              className="w-24 h-24 sm:w-28 sm:h-28 text-[#FF6A1A] animate-pulse"
+              viewBox="0 0 100 100"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M 30 20 C 60 5, 90 25, 75 55 C 60 85, 20 70, 35 45 C 50 20, 80 40, 85 75" />
+              <path d="M 70 70 L 85 77 L 88 62" />
+            </svg>
+          </div>
         </div>
       </div>
 
-      {/* Main Grid: Form + Info Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-        {/* Contact Form Container */}
-        <div className="lg:col-span-7 bg-[#FAF6F0] border border-black/10 rounded-2xl p-5 lg:p-6 shadow-sm">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-5 space-y-3">
+          <h2 className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-black">
+            Send Me A Message
+          </h2>
+          <p className="font-['Inter',sans-serif] text-sm sm:text-base text-black/75 leading-relaxed">
+            Want to partner on your next big project? Looking to apply a fresh coat of paint to your growing SaaS product or secure your infrastructure?
+          </p>
+          <p className="font-['Inter',sans-serif] text-sm sm:text-base text-black/75 leading-relaxed">
+            Send me a message and let&apos;s see if it&apos;s a good fit. I&apos;m always looking for interesting and impactful projects to dig into.
+          </p>
+        </div>
+
+        <div className="lg:col-span-7 lg:row-span-2 bg-[#FAF6F0] border border-black/10 rounded-2xl p-6 sm:p-8 shadow-sm">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="name" className="block mb-1.5 font-mono text-[11px] uppercase tracking-wider text-black/70 font-bold">
-                  Your Name
+                <label htmlFor="name" className="block mb-2 font-mono text-xs uppercase tracking-wider text-black/80 font-bold">
+                  Name <span className="text-black/50 font-normal">(required)</span>
                 </label>
                 <input
                   type="text"
@@ -114,14 +121,14 @@ export default function ContactPage() {
                   onChange={handleChange}
                   autoComplete="off"
                   required
-                  className="w-full px-3.5 py-2.5 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
+                  className="w-full px-4 py-3 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
                   placeholder="Bruce Wayne"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block mb-1.5 font-mono text-[11px] uppercase tracking-wider text-black/70 font-bold">
-                  Your Email
+                <label htmlFor="email" className="block mb-2 font-mono text-xs uppercase tracking-wider text-black/80 font-bold">
+                  Email <span className="text-black/50 font-normal">(required)</span>
                 </label>
                 <input
                   type="email"
@@ -131,15 +138,15 @@ export default function ContactPage() {
                   onChange={handleChange}
                   autoComplete="off"
                   required
-                  className="w-full px-3.5 py-2.5 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
+                  className="w-full px-4 py-3 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
                   placeholder="bruce@wayne.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="subject" className="block mb-1.5 font-mono text-[11px] uppercase tracking-wider text-black/70 font-bold">
-                Subject
+              <label htmlFor="subject" className="block mb-2 font-mono text-xs uppercase tracking-wider text-black/80 font-bold">
+                Subject <span className="text-black/50 font-normal">(required)</span>
               </label>
               <input
                 type="text"
@@ -149,14 +156,14 @@ export default function ContactPage() {
                 onChange={handleChange}
                 autoComplete="off"
                 required
-                className="w-full px-3.5 py-2.5 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
+                className="w-full px-4 py-3 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30"
                 placeholder="Project Inquiry"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block mb-1.5 font-mono text-[11px] uppercase tracking-wider text-black/70 font-bold">
-                Message
+              <label htmlFor="message" className="block mb-2 font-mono text-xs uppercase tracking-wider text-black/80 font-bold">
+                Message <span className="text-black/50 font-normal">(required)</span>
               </label>
               <textarea
                 id="message"
@@ -165,85 +172,130 @@ export default function ContactPage() {
                 onChange={handleChange}
                 autoComplete="off"
                 required
-                rows={3}
-                className="w-full px-3.5 py-2.5 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30 resize-none"
+                rows={5}
+                className="w-full px-4 py-3 bg-white border border-black/15 rounded-xl font-sans text-sm text-black focus:outline-none focus:border-[#FF6A1A] focus:ring-2 focus:ring-[#FF6A1A]/20 transition-all placeholder:text-black/30 resize-none"
                 placeholder="Write your message here..."
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-3 bg-[#FF6A1A] hover:bg-[#e0590f] text-white rounded-xl font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2.5 transition-all shadow-md shadow-[#FF6A1A]/20 disabled:opacity-50 group"
-            >
-              <span>{isSubmitting ? 'SENDING MESSAGE...' : 'SEND MESSAGE'}</span>
-              <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : 'group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform'}`} />
-            </button>
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto px-8 py-3.5 bg-[#FF6A1A] hover:bg-[#e0590f] text-white rounded-full font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2.5 transition-all shadow-md shadow-[#FF6A1A]/20 disabled:opacity-50 group cursor-pointer"
+              >
+                <span>{isSubmitting ? 'Sending me a message...' : 'Send me a message'}</span>
+                <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : 'group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform'}`} />
+              </button>
+            </div>
           </form>
         </div>
 
-        {/* Sidebar Info & Social Links */}
-        <div className="lg:col-span-5 space-y-4">
-          {/* Contact Details Card */}
-          <div className="bg-[#FAF6F0] border border-black/10 rounded-2xl p-5 lg:p-6 space-y-4 shadow-sm">
-            <h2 className="font-['Comic_Neue',cursive] text-xl font-bold text-black pb-2 border-b border-black/10">
-              Direct Channels
-            </h2>
+        <div className="lg:col-span-5 bg-[#FAF6F0] border border-black/10 rounded-2xl p-5 sm:p-6 space-y-4 shadow-sm">
+          <h3 className="font-['Comic_Neue',cursive] text-xl font-bold text-black pb-2 border-b border-black/10">
+            Direct Channels
+          </h3>
 
-            <div className="space-y-3.5">
-              {contactInfos.map((info) => {
-                const Icon = info.icon;
-                return (
-                  <div key={info.label} className="flex items-center gap-3.5">
-                    <div className="w-9 h-9 rounded-xl bg-[#FF6A1A]/10 text-[#FF6A1A] flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-black/50 block">
-                        {info.label}
-                      </span>
-                      {info.href ? (
-                        <a
-                          href={info.href}
-                          className="font-sans text-sm font-semibold text-black hover:text-[#FF6A1A] transition-colors break-all"
-                        >
-                          {info.value}
-                        </a>
-                      ) : (
-                        <p className="font-sans text-sm font-semibold text-black break-all">
-                          {info.value}
-                        </p>
-                      )}
-                    </div>
+          <div className="space-y-3.5">
+            {contactInfos.map((info) => {
+              const Icon = info.icon;
+              return (
+                <div key={info.label} className="flex items-center gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#FF6A1A]/10 text-[#FF6A1A] flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4" />
                   </div>
-                );
-              })}
-            </div>
+                  <div>
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-black/50 block">
+                      {info.label}
+                    </span>
+                    {info.href ? (
+                      <a
+                        href={info.href}
+                        className="font-sans text-sm font-semibold text-black hover:text-[#FF6A1A] transition-colors break-all"
+                      >
+                        {info.value}
+                      </a>
+                    ) : (
+                      <p className="font-sans text-sm font-semibold text-black break-all">
+                        {info.value}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#FF6A1A] text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden space-y-8 mt-4 sm:mt-6 shadow-lg">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
+          <div className="md:col-span-7 space-y-4">
+            <h3 className="font-['Comic_Neue',cursive] text-2xl sm:text-3xl font-bold text-white">
+              Well, this has been fun.
+            </h3>
+            <p className="font-['Inter',sans-serif] text-sm sm:text-base text-white/90 leading-relaxed max-w-xl">
+              Thanks for stopping by my little slice of the web. Let&apos;s be real, you&apos;ll probably never come back to this site, so I encourage you to follow me on X so we can stay connected.
+            </p>
           </div>
 
-          {/* Social Profiles Card */}
-          <div className="bg-[#FAF6F0] border border-black/10 rounded-2xl p-5 lg:p-6 space-y-3 shadow-sm">
-            <h3 className="font-['Comic_Neue',cursive] text-xl font-bold text-black">
-              Social Profiles
-            </h3>
+          <div className="md:col-span-5 flex flex-col gap-3 justify-center items-start md:items-end">
+            <a
+              href="/gallery"
+              className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-xl sm:text-2xl text-white hover:text-black transition-colors uppercase tracking-wider flex items-center gap-1.5 group"
+            >
+              <span>BROWSE MY WORK</span>
+              <ArrowUpRight className="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
 
-            <div className="flex flex-wrap gap-2.5 pt-1">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-black/10 text-black/80 hover:text-[#FF6A1A] hover:border-[#FF6A1A]/40 font-mono text-xs font-bold uppercase tracking-wider transition-all hover:-translate-y-0.5 shadow-sm"
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    <span>{social.label}</span>
-                  </a>
-                );
-              })}
-            </div>
+            <a
+              href="https://x.com/timstittus"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-xl sm:text-2xl text-white hover:text-black transition-colors uppercase tracking-wider flex items-center gap-1.5 group"
+            >
+              <span>FOLLOW ON X</span>
+              <ArrowUpRight className="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/tims-tittus/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-xl sm:text-2xl text-white hover:text-black transition-colors uppercase tracking-wider flex items-center gap-1.5 group"
+            >
+              <span>CONNECT ON LINKEDIN</span>
+              <ArrowUpRight className="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
+
+            <a
+              href="https://github.com/TimsTittus"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-xl sm:text-2xl text-white hover:text-black transition-colors uppercase tracking-wider flex items-center gap-1.5 group"
+            >
+              <span>VIEW GITHUB</span>
+              <ArrowUpRight className="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
+          </div>
+        </div>
+
+        <div className="relative pt-6 border-t border-white/20 flex items-center justify-between overflow-hidden pointer-events-none select-none">
+          <span className="font-['Archivo_Black',var(--font-archivo-black),'Bebas_Neue',sans-serif] text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase text-white/30 tracking-tight leading-none">
+            SEE YA LATER!
+          </span>
+
+          <div className="shrink-0 opacity-40 pr-4">
+            <svg
+              className="w-16 h-16 sm:w-24 sm:h-24 text-white"
+              viewBox="0 0 100 100"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeLinecap="round"
+            >
+              <path d="M 20 80 C 10 40, 50 10, 80 40 C 95 60, 60 90, 40 70 C 25 55, 45 35, 65 50" />
+            </svg>
           </div>
         </div>
       </div>
