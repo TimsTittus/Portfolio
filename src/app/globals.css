@@ -2243,3 +2243,91 @@
   background: #FFFFFF;
   color: #FF6A1A;
 }
+
+/* ==========================================================================
+   RECIPE CARD & RULED NOTEBOOK RESUME STYLES (Awwwards Inspired)
+   ========================================================================== */
+
+/* Ruled Notebook Lines Background */
+.ruled-paper-bg {
+  background-color: #FFFFFF;
+  background-image:
+    linear-gradient(90deg, rgba(239, 68, 68, 0.25) 1px, transparent 1px),
+    repeating-linear-gradient(transparent, transparent 27px, rgba(0, 0, 0, 0.08) 28px);
+  background-position: 32px 0, 0 12px;
+}
+
+/* Dark mode / alternative soft beige notebook paper */
+.ruled-paper-cream {
+  background-color: #FFFDF9;
+  background-image:
+    linear-gradient(90deg, rgba(239, 68, 68, 0.2) 1px, transparent 1px),
+    repeating-linear-gradient(transparent, transparent 27px, rgba(0, 0, 0, 0.06) 28px);
+  background-position: 36px 0, 0 12px;
+}
+
+/* Circular Binder Punch Holes */
+.notebook-hole {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #FDF6F0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Paperclip Shadow */
+.paperclip-shadow {
+  filter: drop-shadow(2px 4px 5px rgba(0, 0, 0, 0.25));
+}
+
+/* Circular Domain Stamp Badge */
+.domain-stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px dashed currentColor;
+  padding: 4px;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px currentColor;
+  transform: rotate(-12deg);
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.domain-stamp:hover {
+  transform: rotate(-4deg) scale(1.08);
+}
+
+/* Recipe Card Hover Effects */
+.recipe-card {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Paperclip Rotation Animation */
+@keyframes paperclipWiggle {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-3deg);
+  }
+
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-paperclip:hover {
+  animation: paperclipWiggle 0.6s ease-in-out;
+}

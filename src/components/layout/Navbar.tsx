@@ -4,14 +4,20 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navLinks = [
+interface NavItem {
+  name: string;
+  path: string;
+  external?: boolean;
+}
+
+const navLinks: NavItem[] = [
   { name: 'PROJECTS', path: '/projects' },
   { name: 'ABOUT', path: '/about' },
   { name: 'EXPERIENCE', path: '/experience' },
   { name: 'GALLERY', path: '/gallery' },
   { name: 'BLOG', path: '/blog' },
   { name: 'CONTACT', path: '/contact' },
-  { name: 'RESUME', path: '/assets/Resume.pdf', external: true },
+  { name: 'RESUME', path: '/resume' },
 ];
 
 const Navbar: React.FC = () => {
