@@ -269,12 +269,57 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     }
   ];
 
+  const whenAiAgentsEscapeFaqs = [
+    {
+      "@type": "Question",
+      "name": "Can prompt injection be fixed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not with current architectures. Instructions and data occupy the same channel with no structural separation, so the model cannot reliably tell them apart. The practical goal is containment: assume injection succeeds and ensure it cannot reach anything consequential."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does running an AI agent in a container solve code execution risk?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It helps considerably but does not close the problem. Research disclosed in July 2026 showed multiple sandbox escapes in AI coding agents that never broke the sandbox — the agent wrote a file that an unsandboxed host tool later executed. Containers must be paired with hardened configuration and an audit of what reads the agent's output."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between the OWASP LLM Top 10 and the OWASP Agentic Top 10?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The LLM Top 10 covers model-layer risks such as prompt injection, sensitive information disclosure and excessive agency. The Top 10 for Agentic Applications, published in December 2025, covers risks that emerge when models plan, act, remember and coordinate: goal hijack, tool misuse, memory poisoning, inter-agent communication, cascading failures and rogue agents. Both should be used together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I detect a compromised AI agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not through authentication anomalies, because the credentials are valid. Watch sequence and provenance: egress calls shortly after untrusted content ingestion, tool sequences deviating from the agent's historical profile, tool definitions that changed after approval, and arguments differing from what the user's request implied."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Model Context Protocol inherently insecure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The MCP authorization specification requires OAuth 2.1, mandatory PKCE, RFC 8707 audience binding and an explicit prohibition on token passthrough. The problems lie in implementations that ignore the specification and in the trust model around tool descriptions, which are model input rather than documentation."
+      }
+    }
+  ];
+
   const postFaqs =
     post.slug === 'mitre-attack-explained-detection-engineer'
       ? mitreAttackFaqs
       : post.slug === 'sigma-yara-detection-engineering'
         ? sigmaYaraFaqs
-        : aiAgentFaqs;
+        : post.slug === 'ai-agent-security-when-ai-agents-escape'
+          ? whenAiAgentsEscapeFaqs
+          : aiAgentFaqs;
 
   const jsonLd = {
     "@context": "https://schema.org",
