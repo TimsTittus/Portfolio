@@ -10,7 +10,7 @@ export const HomeBlog: React.FC = () => {
   return (
     <section className="section pt-12 pb-24" id="home-blog">
       <SectionHeader
-        num="06"
+        num="05"
         label="BLOGS"
         bleed="BLOGS ▫ ARTICLES"
         bleedStyle="outline"

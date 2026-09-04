@@ -4,68 +4,81 @@ import { projects } from '@/data/projects';
 import { ProjectArtwork } from '@/app/projects/ProjectArtwork';
 import { SectionHeader } from './SectionHeader';
 
-export const FeaturedWork: React.FC = () => {
-  const featuredIds = [12, 11, 10];
+const FEATURED_IDS = [12, 11, 10];
 
-  const featuredProjects = featuredIds
-    .map(id => {
-      const p = projects.find(proj => proj.id === id);
-      if (!p) return null;
-      return {
-        id: p.id.toString(),
-        title: p.title,
-        tagline: p.description,
-        tags: p.tags,
-        url: p.links.github,
-      };
-    })
-    .filter((p): p is NonNullable<typeof p> => p !== null);
+const TILT = [-3.4, 2.2, -1.6];
+const DRIFT = [0, 28, 12];
+const TAPE = ['is-tape-left', 'is-tape-center', 'is-tape-right'];
+
+export const FeaturedWork: React.FC = () => {
+  const featuredProjects = FEATURED_IDS
+    .map(id => projects.find(proj => proj.id === id))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
   return (
     <section className="section pt-12 pb-0" id="featured-work">
       <SectionHeader
         num="04"
         label="FEATURED WORK"
-        bleed="FEATURED - WORK"
-        bleedStyle="outline"
+        bleed="FEATURED · WORK"
+        bleedStyle="solid"
         right={
-          <Link href="/projects" className="section-link">
-            <span>ALL PROJECTS</span> →
-          </Link>
+          <span className="font-mono text-[11px] tracking-[.18em] text-[var(--ink-2)] uppercase">
+            {featuredProjects.length} FEATURED
+          </span>
         }
       />
 
-      <div className="featured-list">
-        {featuredProjects.map((project, index) => {
-          const indexStr = (index + 1).toString().padStart(2, '0');
+      <div className="more-projects-wrapper">
+        <div className="scrap-grid">
+          {featuredProjects.map((project, i) => {
+            const url = project.links.live || project.links.github;
 
-          return (
-            <a href={project.url} key={project.id} className="proj-row">
-              <div className="proj-row-index">{indexStr}</div>
+            return (
+              <a
+                href={url}
+                key={project.id}
+                className={`scrap-card ${TAPE[i % TAPE.length]}`}
+                style={{
+                  '--tilt': `${TILT[i % TILT.length]}deg`,
+                  '--drift': `${DRIFT[i % DRIFT.length]}px`,
+                } as React.CSSProperties}
+              >
+                <span className="scrap-tape" aria-hidden="true" />
 
-              <div className="proj-row-title">
-                <h3 className="proj-name">{project.title}</h3>
-                <div className="proj-tagline">{project.tagline}</div>
-              </div>
-
-              <div className="proj-row-preview">
-                <div className="proj-preview-inner">
+                <div className="scrap-photo">
                   <ProjectArtwork title={project.title} />
+                  <span className="scrap-photo-sheen" aria-hidden="true" />
                 </div>
-                <div className="proj-preview-overlay">
-                  {project.tags.join(' • ')}
-                </div>
-              </div>
 
-              <div className="proj-row-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M7 7H17V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </a>
-          );
-        })}
+                <div className="scrap-caption">
+                  <div className="scrap-index">
+                    No. {String(i + 1).padStart(2, '0')}
+                    <span className="scrap-index-rule" />
+                    <span className="scrap-sticker" aria-hidden="true">{project.image}</span>
+                  </div>
+
+                  <h3 className="scrap-title">{project.title}</h3>
+                  <p className="scrap-desc">{project.description}</p>
+
+                  <div className="scrap-meta">
+                    {project.tags.slice(0, 3).join(' · ')}
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+        <div className="more-projects-overlay">
+          <Link href="/projects" className="more-projects-btn">
+            View All Projects
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8 3L13 8L8 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   );

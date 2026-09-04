@@ -4,7 +4,6 @@ import { About } from '@/components/home/About';
 import { Stack } from '@/components/home/Stack';
 import { Experience } from '@/components/home/Experience';
 import { FeaturedWork } from '@/components/home/FeaturedWork';
-import { MoreProjects } from '@/components/home/MoreProjects';
 import { HomeBlog } from '@/components/home/HomeBlog';
 
 const marqueeDomains = [
@@ -40,7 +39,6 @@ export default function Home() {
       <Stack />
       <Experience />
       <FeaturedWork />
-      <MoreProjects />
       <HomeBlog />
     </div>
   );
