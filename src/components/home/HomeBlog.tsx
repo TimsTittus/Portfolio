@@ -2,18 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 import { SectionHeader } from './SectionHeader';
 import { getAllPosts } from '@/lib/mdx';
-import { Clock, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export const HomeBlog: React.FC = () => {
-  const posts = getAllPosts().slice(0, 2);
+  const posts = getAllPosts().slice(0, 3);
 
   return (
     <section className="section pt-12 pb-24" id="home-blog">
       <SectionHeader
         num="05"
         label="BLOGS"
-        bleed="BLOGS ▫ ARTICLES"
-        bleedStyle="outline"
         right={
           <Link href="/blog" className="section-link group">
             <span>ALL POSTS</span> <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -21,69 +19,53 @@ export const HomeBlog: React.FC = () => {
         }
       />
 
-      <div className="home-blog-grid">
-        {posts.map((post, index) => {
-          const dateObj = new Date(post.date);
-          const formattedDate = dateObj.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            timeZone: 'UTC',
-          }).toUpperCase();
+      <div className="whats-new">
+        <div className="whats-new-intro">
+          <h2 className="whats-new-title">What&apos;s New?</h2>
+          <p className="whats-new-blurb">
+            where <em>notes</em> from building agents, breaking them, and
+            defending them turn into <em>writing</em> worth keeping.
+          </p>
 
-          const isNew = index === 0;
+          <div className="whats-new-tabs">
+            <span className="whats-new-tab is-active">Our Blogs</span>
+          </div>
+        </div>
 
-          return (
-            <Link href={`/blog/${post.slug}`} key={post.slug} className="blog-card-link group">
-              <article className="blog-card relative flex flex-col justify-between p-8 rounded-2xl bg-[#FAF6F0] border border-[#000000]/10 hover:border-[#000000]/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] min-h-[280px]">
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs tracking-wider uppercase text-[#000000]/60">{formattedDate}</span>
-                      <span className="text-[#000000]/20">•</span>
-                      <span className="font-mono text-xs text-[#000000]/60 flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-[#FF6A1A]" />
-                        {post.readTime}
-                      </span>
-                    </div>
-                    {isNew && (
-                      <span className="font-mono text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#FF6A1A] text-white">
-                        NEW
-                      </span>
-                    )}
-                  </div>
+        <div className="whats-new-list">
+          {posts.map((post) => {
+            const dateObj = new Date(post.date);
+            const formattedDate = dateObj.toLocaleDateString('en-GB', {
+              year: '2-digit',
+              month: 'short',
+              day: '2-digit',
+              timeZone: 'UTC',
+            });
 
-                  <h3 className="font-['Comic_Neue',cursive] text-2xl md:text-3xl font-bold leading-snug text-[#000000] mb-3 group-hover:text-[#FF6A1A] transition-colors">
-                    {post.title}
-                  </h3>
-
-                  <p className="font-['Inter',sans-serif] text-sm md:text-base text-[#000000]/70 leading-relaxed line-clamp-2 mb-6">
-                    {post.description}
-                  </p>
+            return (
+              <Link href={`/blog/${post.slug}`} key={post.slug} className="whats-new-row">
+                <div className="whats-new-meta">
+                  <span className="whats-new-read">{post.readTime}</span>
+                  <span className="whats-new-date">{formattedDate}</span>
                 </div>
 
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md bg-white border border-black/5 text-black/60"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/5 pt-4">
-                    <span className="font-mono text-xs font-bold tracking-widest text-[#FF6A1A] uppercase flex items-center gap-1 group-hover:gap-2 transition-all">
-                      READ ARTICLE <span className="text-base transition-transform group-hover:translate-x-1">→</span>
-                    </span>
-                  </div>
+                <div className="whats-new-body">
+                  <h3 className="whats-new-headline">{post.title}</h3>
+                  <p className="whats-new-desc">{post.description}</p>
                 </div>
-              </article>
-            </Link>
-          );
-        })}
+
+                <span className="whats-new-more">Learn More</span>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="whats-new-cta">
+          <Link href="/blog" className="whats-new-btn">
+            Explore More
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );
