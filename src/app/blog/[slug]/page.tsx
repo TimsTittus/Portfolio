@@ -312,8 +312,61 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     }
   ];
 
+  const aiEnhancedAttacksFaqs = [
+    {
+      "@type": "Question",
+      "name": "What is an AI-enhanced cyberattack?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An attack where AI improves or automates one or more phases — reconnaissance, phishing, malware behaviour, exploit development, or full orchestration. The Cloud Security Alliance ranked it the #2 cloud threat in its 2026 report. The defining trait isn't a new attack type; it's the drop in cost and the jump in speed and scale for existing ones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Has an AI actually run a real cyberattack?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Anthropic disclosed in November 2025 that a state-linked group tracked as GTG-1002 jailbroke its Claude model and used it to automate 80-90% of an espionage campaign against roughly 30 organisations, with humans involved at only four to six decision points."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is AI-generated malware real or hype?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both, depending on the sample. PROMPTSTEAL, used by APT28 against targets in Ukraine, is real and queries an LLM at runtime to generate its Windows commands. PROMPTFLUX, the self-rewriting VBScript dropper, was assessed by Google Threat Intelligence Group as still in development with no ability to compromise a device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does AI phishing really work better than human phishing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In controlled studies, yes. AI-automated phishing matched human experts at about 54% click-through versus 12% for generic lures, at up to 50 times lower cost, in one arXiv study. A USENIX Security 2026 field study with 7,741 participants found personalised AI phishing achieved 2.4 times the click rate of generic phishing at roughly $0.03 per email."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the single most effective defense against AI-enhanced attacks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There isn't one, but if forced to pick: identity. Phishing-resistant MFA, least privilege and Zero Trust neutralise the payoff of convincing lures and the value of stolen credentials, which is where most of these techniques ultimately aim."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you detect malware that calls an LLM at runtime?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not with static signatures, since the malicious command does not exist until execution. Watch behaviour instead: unexpected processes making outbound calls to LLM API endpoints, followed by command execution or file staging shortly after. Egress monitoring and behavioural EDR carry this detection, not traditional antivirus."
+      }
+    }
+  ];
+
   const postFaqs =
-    post.slug === 'mitre-attack-explained-detection-engineer'
+    post.slug === 'ai-enhanced-cyberattacks'
+      ? aiEnhancedAttacksFaqs
+      : post.slug === 'mitre-attack-explained-detection-engineer'
       ? mitreAttackFaqs
       : post.slug === 'sigma-yara-detection-engineering'
         ? sigmaYaraFaqs

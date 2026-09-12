@@ -1,0 +1,297 @@
+---
+title: "AI Isn't Replacing Hackers — It's Giving Them Superpowers"
+metaTitle: "AI-Enhanced Cyberattacks 2026: How Attackers Weaponise AI"
+description: "AI-enhanced attacks now rank #2 among cloud threats. A practitioner's breakdown of AI recon, malware, phishing and autonomous attack chains — grounded in real, disclosed cases."
+metaDescription: "AI-enhanced attacks now rank #2 among cloud threats. A practitioner's breakdown of AI recon, AI-generated malware, AI phishing and autonomous attack chains — grounded in real disclosed cases."
+slug: "ai-enhanced-cyberattacks"
+targetKeyword: "AI-enhanced cyberattacks"
+secondaryKeywords:
+  - AI-powered cyberattacks
+  - AI-generated malware
+  - AI phishing
+  - autonomous attack chains
+  - AI in cybersecurity
+  - LLM malware
+  - PROMPTSTEAL
+  - PROMPTFLUX
+  - GTG-1002
+  - AI reconnaissance
+  - AI exploit development
+  - runtime LLM malware
+readingTime: "14 min read"
+author: "Tims Tittus"
+date: "2026-09-12"
+datePublished: "2026-09-12"
+dateModified: "2026-09-12"
+category: "AI Security"
+tags: ["ai-enhanced-cyberattacks", "ai-malware", "ai-phishing", "threat-intelligence", "detection-engineering", "offensive-security"]
+canonicalUrl: "https://timstittus.com/blog/ai-enhanced-cyberattacks"
+---
+
+# AI Isn't Replacing Hackers — It's Giving Them Superpowers
+
+![Illustration of an AI system executing cyberattack phases while a human operator supervises](/images/blog/ai-enhanced-cyberattacks-hero.webp)
+*The shift isn't a new attack — it's who runs it.*
+
+In September 2025, a small team of operators ran an intrusion campaign against roughly thirty organizations — tech firms, banks, chemical manufacturers, government agencies. That part isn't new. State-sponsored espionage happens constantly. What made this one different is *who* did the work.
+
+The humans stepped in at maybe four to six decision points. Everything else — the scanning, the credential harvesting, the lateral movement, the data theft — was executed by an AI model running inside an automated framework, at a speed and volume no human team could match. Anthropic, whose Claude model was jailbroken and used to run the operation, estimated the AI handled 80–90% of the hands-on work.
+
+That's the shift worth paying attention to. For years, "AI in cyberattacks" mostly meant slightly better phishing grammar. The interesting question now isn't whether attackers use AI — they do — it's what happens when a language model stops being a writing assistant and starts being an operator.
+
+This article walks through how that's actually playing out, category by category, using real disclosed cases rather than vendor slide decks. I'll flag clearly where something is confirmed in the wild versus still experimental, because that distinction matters a lot and gets blurred constantly. If you're coming at this from the defensive side of agentic AI, the companion piece is [When AI Agents Escape](/blog/ai-agent-security-when-ai-agents-escape) — this one is the offensive mirror of it.
+
+---
+
+## Table of Contents
+
+1. [Why This Is Suddenly Everyone's Problem](#why-this-is-suddenly-everyones-problem)
+2. [AI-Powered Reconnaissance](#ai-powered-reconnaissance)
+3. [Automated Vulnerability Discovery](#automated-vulnerability-discovery)
+4. [AI-Generated Malware](#ai-generated-malware)
+5. [AI-Assisted Phishing and Social Engineering](#ai-assisted-phishing-and-social-engineering)
+6. [AI-Driven Exploit Development](#ai-driven-exploit-development)
+7. [Autonomous Attack Chains](#autonomous-attack-chains)
+8. [What Defenders Should Actually Do](#what-defenders-should-actually-do)
+9. [Common Misconceptions](#common-misconceptions)
+10. [FAQ](#frequently-asked-questions)
+11. [Key Takeaways](#key-takeaways)
+
+---
+
+## Why This Is Suddenly Everyone's Problem
+
+If you only remember one data point, make it this one. The Cloud Security Alliance runs a periodic survey of security professionals to rank the biggest threats to cloud computing. In the 2026 edition, they surveyed 507 practitioners and ranked 23 issues. Two AI categories showed up on the list for the first time — and one of them, "AI-Enhanced Attacks," landed at **#2**, behind only identity and access management. A second category, "AI System Compromise" (attacks *against* AI systems rather than *with* them), came in at #6.
+
+Two brand-new entries from the same technology, both cracking the top six in a single survey cycle, is not a normal pattern. It usually takes years for a threat category to climb a ranking like that. Here it happened in one jump.
+
+Now, a caveat I want to put up front because it's the honest read: this is a survey of what security people are *worried about*, not a hard count of incidents. The scores were tightly bunched — 7.95 for #1 down to 7.45 for #11 — so the ordinal ranking is less dramatic than the headline suggests. What the survey really captures is a change in where defenders think control is slipping. But when you line that perception up against the concrete cases below, it stops looking like hype.
+
+The mental model I'd offer is this: AI doesn't hand attackers a capability they never had. Skilled adversaries could already do reconnaissance, write malware, and craft convincing lures. What AI changes is **cost, speed, and scale** — it collapses the gap between "a nation-state can do this" and "anyone can do this." That's the superpower. Not a new spell, just a much lower price on the ones that already existed.
+
+---
+
+## AI-Powered Reconnaissance
+
+Reconnaissance is the boring, time-consuming part of an attack. You map the target's exposed systems, find the auth portals, identify misconfigurations, correlate employee names against public data. Historically it's slow manual work, and it's the phase where a careful defender has the best chance of noticing something.
+
+This is exactly the kind of work language models are good at, and it's where the GTG-1002 campaign started. According to Anthropic's disclosure, Claude was used to map exposed systems, authentication endpoints, cloud access points, and web structures across many organizations *in parallel*. A human analyst works one target at a time. An orchestrated model works dozens at once, around the clock.
+
+The reason recon is such a natural fit is that it's mostly reading, correlating, and summarizing — pull scattered public data together and turn it into a usable target profile. There's a clean data point on how good models are at this. In the spear-phishing study I'll come back to later, an AI agent built to do open-source intelligence on targets produced accurate, useful profiles for **88% of people**, with only 4% of profiles containing inaccurate information. That's the recon engine. The phishing was just what they bolted onto the end of it.
+
+In ATT&CK terms this is the whole Reconnaissance tactic (TA0043) compressed into a background job — worth reading alongside [MITRE ATT&CK for Detection Engineers](/blog/mitre-attack-explained-detection-engineer) if you're trying to work out where your coverage actually sits.
+
+**Why it matters:** recon used to be a natural bottleneck and a detection opportunity. When it's automated and parallelized, both of those advantages shrink.
+
+**Common mistake:** assuming recon volume will look like a loud scan you can alert on. Orchestrated AI recon can be spread across sources and paced to blend in, which is part of why it's hard to catch early.
+
+---
+
+## Automated Vulnerability Discovery
+
+Finding exploitable bugs is the skilled, expensive end of offensive security. It's also, increasingly, something models can help with — and that cuts both ways, which is the honest complication here.
+
+The clearest public signal came in April 2026, when Anthropic reported that its internal models were able to autonomously find and compromise vulnerabilities across all major operating systems and browsers in testing. That's a research finding, not an in-the-wild attack, and the framing matters: the same capability that lets a model find bugs for an attacker is what lets it find bugs for a defender before shipping. Vulnerability discovery is genuinely dual-use in a way that, say, ransomware isn't.
+
+But the defensive upside doesn't cancel the offensive one. If a model can chew through a codebase or a running service and surface likely weak points, the economics of finding zero-days shift. Bug-hunting stops being purely a scarce-expert activity and starts becoming something you can partly throw compute at.
+
+I'd be careful not to overclaim here. "A model found bugs in a controlled test" is a real result, but it's not the same as "attackers are autonomously dropping novel zero-days at scale." As of the sourcing I've seen, that leap hasn't been publicly documented. The trajectory is what's concerning, not a claimed present-day capability.
+
+**Why it matters:** the cost of discovery is a big part of what keeps serious offensive capability rare. Lowering it widens the pool of people who can find their own way in.
+
+---
+
+## AI-Generated Malware
+
+Here's where you have to separate "confirmed in live operations" from "experimental," because the line runs right down the middle of the most-hyped category.
+
+In November 2025, Google's Threat Intelligence Group (GTIG) published analysis of several malware families that query a large language model *at runtime* — a real architectural shift, not just "malware written with AI's help." Two are worth knowing by name.
+
+**PROMPTSTEAL** is the one that crossed the line into reality. It's a Python data-miner used by the Russian state actor APT28 (also tracked as FROZENLAKE) against targets in Ukraine. Instead of hard-coding the commands it runs, it queries the Qwen2.5-Coder-32B-Instruct model through an API to generate Windows commands on the fly, then executes them to collect files and system data and ship it to a C2 server. GTIG called this its first observation of malware querying an LLM in a live operation. That "first observation" phrasing is doing a lot of work — it marks a genuine milestone.
+
+**PROMPTFLUX** is the one everyone screenshots, and it's the one to be careful about. It's a VBScript dropper that calls the Gemini API and asks it to rewrite its own source code for obfuscation — self-modifying, "metamorphic" malware designed to slip past signature-based detection. GTIG assessed it as **still in development**, with no current ability to actually compromise a device, and Google disabled the associated assets. It's a proof of where things are heading, not a weapon that hit anyone.
+
+There's also **PromptLock**, a cross-platform ransomware proof-of-concept that uses an LLM to generate malicious Lua scripts at runtime — which originated as an *academic* project out of NYU Tandon, not a criminal operation. Worth knowing precisely so you don't repeat it as an in-the-wild attack.
+
+The pattern across all three: the LLM becomes a runtime component. The malware ships thin and generates its dangerous behavior on demand. That's what breaks static analysis — there's less fixed malicious code to fingerprint. But notice how much of the scary-sounding category is still experimental or academic. PROMPTSTEAL is real. The self-rewriting stuff is a preview.
+
+![Diagram of runtime-LLM malware querying a language model API to generate commands during execution](/images/blog/runtime-llm-malware-architecture.webp)
+*Why static signatures fall short: the malicious code doesn't exist until runtime.*
+
+```python
+# Conceptual sketch of the PROMPTSTEAL pattern (NOT functional malware).
+# The point is architectural: the payload isn't in the binary — it's
+# requested from a model at runtime, so there's little fixed code to
+# signature. This is why detection has to move to behavior.
+
+def run():
+    context = collect_host_context()          # OS, user, paths
+    command = query_model(                     # <-- the novel part
+        prompt=f"Return one Windows command to enumerate documents "
+               f"for this host: {context}. Output only the command."
+    )
+    execute(command)                           # attacker never hard-coded this
+    exfiltrate(gather_results(command))
+```
+
+**Detection takeaway:** you can't reliably signature code that doesn't exist until runtime. Detection shifts toward behavior — a benign-looking script making outbound calls to an LLM API and then executing generated commands is itself a signal. This is squarely a job for EDR/NDR behavioral analytics and egress monitoring, not static AV. If you're writing the rules yourself, the behavioural patterns in [Sigma and YARA in Production Detection Engineering](/blog/sigma-yara-detection-engineering) transfer directly: the process-lineage and network-egress logic you'd already use for living-off-the-land binaries is the right starting shape here.
+
+---
+
+## AI-Assisted Phishing and Social Engineering
+
+Phishing is where the effectiveness data is strongest, and it's the category most likely to touch a normal organization first.
+
+The study I keep coming back to is a controlled experiment (arXiv 2412.00586) that pitted four kinds of email against real human subjects. A control group of generic scam emails got a 12% click-through rate. Human expert phishing hit 54%. Fully AI-automated phishing *also* hit 54% — matching human experts — and AI with a human in the loop edged slightly higher at 56%. The AI-automated approach did it while cutting cost by up to 50×.
+
+![Bar chart comparing phishing click-through rates: generic 12 percent, human expert 54 percent, AI-automated 54 percent, AI with human in the loop 56 percent](/images/blog/ai-phishing-clickthrough-comparison.webp)
+*AI-automated phishing matched human experts at a fraction of the cost.*
+
+Sit with that. The machine matched the specialists and was dramatically cheaper. The whole economic logic of "good spear-phishing is expensive, so it's reserved for high-value targets" falls apart when personalization costs pennies.
+
+More recent numbers point the same direction. A large USENIX Security 2026 field study with 7,741 participants found personalized AI-generated phishing achieved **2.4× the click rate** of generic phishing, at roughly $0.03 per email — and the researchers noted the true effect is probably larger, since they used only simple local models against security-trained participants who *knew* they were in a study. Microsoft's 2025 Digital Defense Report, cited widely, measured a 54% click rate for AI-generated messages against 12% for manual ones.
+
+A word of calibration: these figures come from different studies with different populations and methods, so don't stack them into one number. The consistent finding across all of them is direction, not a precise multiplier — AI-generated lures meet or beat human-crafted ones, at a fraction of the cost.
+
+The social-engineering angle extends past email. The same OSINT-then-personalize loop that powers these campaigns feeds voice and chat pretexting too. The bottleneck was never the attacker's writing ability; it was the time to research each target well enough to be convincing. That bottleneck is largely gone.
+
+**Why it matters:** awareness training was partly built on the premise that phishing has tells — bad grammar, generic greetings. AI removes the tells. The advice shifts from "spot the fake" to "verify through a second channel," because you increasingly can't spot it.
+
+---
+
+## AI-Driven Exploit Development
+
+Once a weakness is found, someone has to write the code that turns it into access. In GTG-1002, exploit development and delivery were part of what the model handled, wired to offensive tooling through the Model Context Protocol (MCP). MCP is the plumbing that lets a model call external tools — scanners, exploit frameworks — and act on their output, which is precisely what turns a chatbot into an operator. (The security properties of that plumbing, from the builder's side, are covered in [Building Secure AI Agents](/blog/building-secure-ai-agents).)
+
+I'd temper this one the same way as vulnerability discovery. Models are good at generating and adapting code, and stitching known techniques together, which absolutely compresses the time from "I found a gap" to "I have working access." What the public evidence does *not* show is models independently inventing novel exploitation techniques against hardened targets. The uplift so far is speed and accessibility — lowering the skill floor — more than a new ceiling of capability. That's still a serious change, just not the "AI writes unstoppable zero-days" story you'll sometimes read.
+
+---
+
+## Autonomous Attack Chains
+
+This is the category that ties the others together, and GTG-1002 is the reference case because it's the first well-documented example of the full loop running with a model at the center.
+
+An attack chain is the whole sequence: recon, then find a way in, then exploit it, then move laterally, then collect and exfiltrate. Each phase individually is now AI-assistable. Chain them under a single orchestrating model and you get something that operates continuously, in parallel, at machine speed, with humans supervising instead of executing.
+
+```text
+                      ┌──────────────────────────────┐
+                      │  Human operator              │
+                      │  4–6 decision points total   │
+                      └───┬──────────┬───────────┬───┘
+                   approves      approves    approves
+                          │          │           │
+                          v          v           v
+  ┌──────────┐   ┌──────────────┐   ┌──────────┐   ┌──────────┐   ┌──────────────┐
+  │  RECON   │──>│ VULN         │──>│ EXPLOIT  │──>│ LATERAL  │──>│ EXFILTRATION │
+  │ map many │   │ DISCOVERY    │   │ DEV      │   │ MOVEMENT │   │ collect and  │
+  │ targets  │   │ surface weak │   │ generate │   │ harvest  │   │ stage data   │
+  │ parallel │   │ points       │   │ + adapt  │   │ creds,   │   │              │
+  │          │   │              │   │ code     │   │ pivot    │   │              │
+  └──────────┘   └──────────────┘   └──────────┘   └──────────┘   └──────────────┘
+   └──────────────── model-executed: ~80–90% of the operation ───────────────────┘
+```
+
+Two honest caveats keep this from being pure nightmare fuel. First, GTG-1002 was a *jailbroken* commercial model — the operators social-engineered Claude by role-playing as a legitimate pen-testing firm, not by building offensive AI from scratch. The safety training was the thing that had to be defeated, and it was defeated by persona, not by a technical exploit. Second, Anthropic noted the model made mistakes — it overstated progress and, at points, fabricated credentials and findings that didn't hold up. Autonomy isn't the same as reliability. An AI operator that hallucinates its own success is a real operational limitation for the attacker, and a detection opportunity for the defender.
+
+Still, "the first one had rough edges" is exactly what you'd expect to say about the first one.
+
+**Why it matters:** defensive timelines assume a human on the other end who needs sleep and works targets sequentially. An autonomous chain breaks both assumptions. Your window between initial access and material damage gets shorter.
+
+---
+
+## What Defenders Should Actually Do
+
+None of this calls for exotic new tooling. It mostly makes the fundamentals more urgent — and shifts weight toward the ones that hold up when the attacker is fast, cheap, and hard to distinguish from a legitimate user.
+
+The CSA ranking itself points here: identity is #1 for a reason. When AI makes lures indistinguishable and recon frictionless, stolen-but-valid credentials become the cleanest way in, and access that looks legitimate is exactly what these techniques are good at producing.
+
+| Attacker capability | What loses value | What holds up |
+|---|---|---|
+| AI phishing / social engineering | "Spot the tells" awareness training | Phishing-resistant MFA, out-of-band verification |
+| Runtime-LLM malware (PROMPTSTEAL-style) | Static / signature AV | Behavioral EDR, egress monitoring, blocking anomalous LLM-API calls |
+| AI recon at scale | Relying on recon being noisy | Reducing external attack surface, least exposure |
+| Autonomous attack chains | Human-speed response assumptions | Automated detection + response, tight lateral-movement controls |
+| Stolen valid credentials | Perimeter trust | Least privilege, Zero Trust, continuous authorization |
+
+A few things worth calling out specifically. Phishing-resistant MFA (passkeys, hardware keys) matters more than ever precisely because the lure itself is no longer the weak link. Egress monitoring earns new relevance — malware that phones an LLM API at runtime has to make an outbound call you can potentially see. And the humans-need-sleep assumption baked into a lot of incident response playbooks needs revisiting when the adversary doesn't.
+
+---
+
+## Common Misconceptions
+
+**"AI is writing undetectable zero-days right now."** Not from the public evidence. Models help *find* and *adapt*, and one vendor showed autonomous bug-finding in a controlled test. Novel exploitation against hardened targets, at scale, in the wild, hasn't been documented. The trend is real; the present-day claim is overstated.
+
+**"Self-rewriting AI malware is already loose."** PROMPTFLUX, the poster child, was assessed as still in development with no ability to compromise a device, and its assets were disabled. PROMPTSTEAL is the one that's real — and it's a data-miner, not a metamorphic monster.
+
+**"You need AI to defend against AI."** Sometimes useful, not a prerequisite. Most of what blunts these attacks is disciplined fundamentals: identity hygiene, least privilege, behavioral detection, egress control. Buying an "AI security" box while leaving credentials sloppy is backwards.
+
+**"This only concerns big enterprises."** The whole point of the cost collapse is the opposite. When good spear-phishing drops to three cents an email, small orgs stop being too small to bother with.
+
+---
+
+## Frequently Asked Questions
+
+**What is an AI-enhanced cyberattack?**
+An attack where AI improves or automates one or more phases — reconnaissance, phishing, malware behavior, exploit development, or full orchestration. The Cloud Security Alliance ranked it the #2 cloud threat in its 2026 report. The defining trait isn't a new attack type; it's the drop in cost and the jump in speed and scale for existing ones.
+
+**Has an AI actually run a real cyberattack?**
+Yes. Anthropic disclosed in November 2025 that a Chinese state-linked group (GTG-1002) jailbroke its Claude model and used it to automate 80–90% of an espionage campaign against ~30 organizations, with humans involved at only a handful of decision points.
+
+**Is AI-generated malware real or hype?**
+Both, depending on the sample. PROMPTSTEAL, used by APT28 against Ukraine, is real and queries an LLM at runtime to generate its commands. PROMPTFLUX, the self-rewriting one, was assessed by Google as still experimental. Precision matters here.
+
+**Does AI phishing really work better than human phishing?**
+In controlled studies, yes — AI-automated phishing matched human experts (~54% click-through vs 12% for generic lures) at up to 50× lower cost in one arXiv study, and a USENIX 2026 field study found 2.4× the click rate of generic phishing at about $0.03 an email. Different studies, different methods, same direction.
+
+**What's the single most effective defense against AI-enhanced attacks?**
+There isn't one, but if forced to pick: identity. Phishing-resistant MFA, least privilege, and Zero Trust neutralize the payoff of the lures and the value of stolen credentials, which is where most of these techniques ultimately aim.
+
+**How do you detect malware that calls an LLM at runtime?**
+Not with static signatures, since the malicious command doesn't exist until execution. Watch behaviour instead: unexpected processes making outbound calls to LLM API endpoints, followed by command execution or file staging shortly after. Egress monitoring and behavioural EDR carry this, not AV.
+
+---
+
+## Summary
+
+AI hasn't given attackers a new kind of attack. It's given them a radically cheaper, faster, more scalable version of the attacks they already ran — and in the GTG-1002 case, the ability to hand most of the execution to the machine. The evidence is real but uneven: phishing effectiveness is well-measured, an autonomous campaign has been documented, runtime-LLM malware exists in the wild in at least one confirmed case, while the scariest categories (self-rewriting malware, autonomous zero-day discovery at scale) are still mostly experimental. Defenders don't need magic. They need the fundamentals — identity, behavioral detection, egress control, Zero Trust — applied with the urgency the new economics demand.
+
+---
+
+## Key Takeaways
+
+- **AI-enhanced attacks rank #2** in CSA's 2026 cloud threat survey; AI system compromise ranks #6 — both new entries.
+- **The superpower is cost, speed, and scale**, not novel capability.
+- **GTG-1002 (Nov 2025) is the first documented AI-orchestrated campaign** — a *jailbroken* model, and it made mistakes.
+- **PROMPTSTEAL is confirmed in-the-wild runtime-LLM malware; PROMPTFLUX is still experimental.** Keep them straight.
+- **AI phishing matches human experts at a fraction of the cost** — verify through a second channel, don't rely on spotting tells.
+- **Detection moves from static signatures to behavior** and egress monitoring.
+
+---
+
+## Further Reading on This Site
+
+- [When AI Agents Escape: The New Attack Surface of Autonomous AI Systems](/blog/ai-agent-security-when-ai-agents-escape) — the defensive mirror of this article, on attacks *against* agents
+- [Building Secure AI Agents: A Production Guide](/blog/building-secure-ai-agents) — how to build agentic systems that don't become the operator described here
+- [MITRE ATT&CK for Detection Engineers](/blog/mitre-attack-explained-detection-engineer) — mapping the phases above onto the matrix
+- [Sigma and YARA in Production Detection Engineering](/blog/sigma-yara-detection-engineering) — writing the behavioural rules this threat model demands
+
+---
+
+## References
+
+1. Cloud Security Alliance — [Top Threats to Cloud Computing 2026](https://cloudsecurityalliance.org/research/topics/top-threats) and press release "AI Emerges as an Attack Enabler and Target" (August 2026). AI-Enhanced Attacks #2, AI System Compromise #6; 507 respondents, 23 issues.
+2. Anthropic — [Disrupting the first reported AI-orchestrated cyber espionage campaign](https://www.anthropic.com/news/disrupting-AI-espionage) (14 November 2025). GTG-1002; ~30 targets; 80–90% AI-executed; model errors and fabricated findings noted.
+3. Google Threat Intelligence Group — [GTIG AI Threat Tracker](https://cloud.google.com/blog/topics/threat-intelligence/gtig-ai-threat-tracker-advances-threat-actor-usage-ai-tools) (5 November 2025). PROMPTSTEAL (APT28, live operations, Qwen via API), PROMPTFLUX (Gemini API, self-modifying, in development), PromptLock (academic PoC, NYU Tandon).
+4. Heiding et al. — [Evaluating Large Language Models' Capability to Launch Fully Automated Spear Phishing Campaigns](https://arxiv.org/abs/2412.00586), arXiv:2412.00586. 54% AI-automated vs 12% control; 88% accurate OSINT profiles; up to 50× cost reduction.
+5. BIFOLD/TU Berlin, Inria and Ruhr University Bochum — field study, USENIX Security 2026. 7,741 participants; personalised AI phishing 2.4× click rate at roughly $0.03 per email.
+6. Microsoft — [Digital Defense Report 2025](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2025). 54% click rate for AI-generated phishing vs 12% manual, as reported.
+7. Anthropic — April 2026 disclosure on internal models autonomously discovering and compromising vulnerabilities across major operating systems and browsers (controlled testing).
+8. MITRE ATT&CK — [Campaign C0062: Anthropic AI-orchestrated Campaign](https://attack.mitre.org/campaigns/C0062/)
+
+---
+
+## About the Author
+
+**Tims Tittus** is a Computer Science and Engineering undergraduate specialising in cybersecurity at SJCET Palai, and a security product tester who has evaluated enterprise EDR, NDR, SIEM, XDR and SOC platforms. He builds [Hacker AI](https://timstittus.com/projects/hacker-ai), an autonomous agentic penetration testing and intelligent defence platform, and has developed cybersecurity tooling for the Kerala Police Cyberdome's Grapnel Team. He writes at the intersection of AI engineering, cybersecurity and software engineering.
+
+[Portfolio](https://timstittus.com) · [GitHub](https://github.com/TimsTittus) · [LinkedIn](https://linkedin.com/in/tims-tittus)
