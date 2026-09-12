@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { CodeBlock } from '@/components/blog/CodeBlock';
+import { MermaidDiagram } from '@/components/blog/MermaidDiagram';
 import { ArrowLeft, Clock, Calendar, User, Share2, ChevronDown } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -504,6 +505,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </code>
         );
       }
+      // ```mermaid fences render as diagrams instead of code.
+      if (/language-mermaid/.test(className || '')) {
+        const source = React.Children.toArray(children)
+          .map((child) => (typeof child === 'string' ? child : ''))
+          .join('');
+        return <MermaidDiagram chart={source} />;
+      }
+
       return <CodeBlock className={className}>{children}</CodeBlock>;
     },
     pre: ({ children }: any) => <>{children}</>,

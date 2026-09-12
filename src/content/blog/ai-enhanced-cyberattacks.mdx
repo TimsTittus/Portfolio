@@ -173,23 +173,19 @@ This is the category that ties the others together, and GTG-1002 is the referenc
 
 An attack chain is the whole sequence: recon, then find a way in, then exploit it, then move laterally, then collect and exfiltrate. Each phase individually is now AI-assistable. Chain them under a single orchestrating model and you get something that operates continuously, in parallel, at machine speed, with humans supervising instead of executing.
 
-```text
-                      ┌──────────────────────────────┐
-                      │  Human operator              │
-                      │  4–6 decision points total   │
-                      └───┬──────────┬───────────┬───┘
-                   approves      approves    approves
-                          │          │           │
-                          v          v           v
-  ┌──────────┐   ┌──────────────┐   ┌──────────┐   ┌──────────┐   ┌──────────────┐
-  │  RECON   │──>│ VULN         │──>│ EXPLOIT  │──>│ LATERAL  │──>│ EXFILTRATION │
-  │ map many │   │ DISCOVERY    │   │ DEV      │   │ MOVEMENT │   │ collect and  │
-  │ targets  │   │ surface weak │   │ generate │   │ harvest  │   │ stage data   │
-  │ parallel │   │ points       │   │ + adapt  │   │ creds,   │   │              │
-  │          │   │              │   │ code     │   │ pivot    │   │              │
-  └──────────┘   └──────────────┘   └──────────┘   └──────────┘   └──────────────┘
-   └──────────────── model-executed: ~80–90% of the operation ───────────────────┘
+```mermaid
+flowchart LR
+    A["RECON<br/>map targets in parallel"] --> B["VULN DISCOVERY<br/>surface weak points"]
+    B --> C["EXPLOIT DEV<br/>generate + adapt code"]
+    C --> D["LATERAL MOVEMENT<br/>harvest creds, pivot"]
+    D --> E["EXFILTRATION<br/>collect + stage data"]
+    H["HUMAN OPERATOR<br/>4-6 decision points"] -. supervises .-> A
+    H -. supervises .-> C
+    H -. supervises .-> E
+    style H fill:#F5E2D6,stroke:#E65C33,stroke-width:2px
 ```
+*Roughly 80-90% of the operation was model-executed. The humans approved, they did not operate.*
+
 
 Two honest caveats keep this from being pure nightmare fuel. First, GTG-1002 was a *jailbroken* commercial model — the operators social-engineered Claude by role-playing as a legitimate pen-testing firm, not by building offensive AI from scratch. The safety training was the thing that had to be defeated, and it was defeated by persona, not by a technical exploit. Second, Anthropic noted the model made mistakes — it overstated progress and, at points, fabricated credentials and findings that didn't hold up. Autonomy isn't the same as reliability. An AI operator that hallucinates its own success is a real operational limitation for the attacker, and a detection opportunity for the defender.
 
