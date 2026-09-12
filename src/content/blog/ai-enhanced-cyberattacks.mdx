@@ -227,23 +227,29 @@ A few things worth calling out specifically. Phishing-resistant MFA (passkeys, h
 
 ## Frequently Asked Questions
 
-**What is an AI-enhanced cyberattack?**
+<FaqItem q="What is an AI-enhanced cyberattack?">
 An attack where AI improves or automates one or more phases — reconnaissance, phishing, malware behavior, exploit development, or full orchestration. The Cloud Security Alliance ranked it the #2 cloud threat in its 2026 report. The defining trait isn't a new attack type; it's the drop in cost and the jump in speed and scale for existing ones.
+</FaqItem>
 
-**Has an AI actually run a real cyberattack?**
+<FaqItem q="Has an AI actually run a real cyberattack?">
 Yes. Anthropic disclosed in November 2025 that a Chinese state-linked group (GTG-1002) jailbroke its Claude model and used it to automate 80–90% of an espionage campaign against ~30 organizations, with humans involved at only a handful of decision points.
+</FaqItem>
 
-**Is AI-generated malware real or hype?**
+<FaqItem q="Is AI-generated malware real or hype?">
 Both, depending on the sample. PROMPTSTEAL, used by APT28 against Ukraine, is real and queries an LLM at runtime to generate its commands. PROMPTFLUX, the self-rewriting one, was assessed by Google as still experimental. Precision matters here.
+</FaqItem>
 
-**Does AI phishing really work better than human phishing?**
+<FaqItem q="Does AI phishing really work better than human phishing?">
 In controlled studies, yes — AI-automated phishing matched human experts (~54% click-through vs 12% for generic lures) at up to 50× lower cost in one arXiv study, and a USENIX 2026 field study found 2.4× the click rate of generic phishing at about $0.03 an email. Different studies, different methods, same direction.
+</FaqItem>
 
-**What's the single most effective defense against AI-enhanced attacks?**
+<FaqItem q="What's the single most effective defense against AI-enhanced attacks?">
 There isn't one, but if forced to pick: identity. Phishing-resistant MFA, least privilege, and Zero Trust neutralize the payoff of the lures and the value of stolen credentials, which is where most of these techniques ultimately aim.
+</FaqItem>
 
-**How do you detect malware that calls an LLM at runtime?**
+<FaqItem q="How do you detect malware that calls an LLM at runtime?">
 Not with static signatures, since the malicious command doesn't exist until execution. Watch behaviour instead: unexpected processes making outbound calls to LLM API endpoints, followed by command execution or file staging shortly after. Egress monitoring and behavioural EDR carry this, not AV.
+</FaqItem>
 
 ---
 
@@ -283,11 +289,3 @@ AI hasn't given attackers a new kind of attack. It's given them a radically chea
 6. Microsoft — [Digital Defense Report 2025](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2025). 54% click rate for AI-generated phishing vs 12% manual, as reported.
 7. Anthropic — April 2026 disclosure on internal models autonomously discovering and compromising vulnerabilities across major operating systems and browsers (controlled testing).
 8. MITRE ATT&CK — [Campaign C0062: Anthropic AI-orchestrated Campaign](https://attack.mitre.org/campaigns/C0062/)
-
----
-
-## About the Author
-
-**Tims Tittus** is a Computer Science and Engineering undergraduate specialising in cybersecurity at SJCET Palai, and a security product tester who has evaluated enterprise EDR, NDR, SIEM, XDR and SOC platforms. He builds [Hacker AI](https://timstittus.com/projects/hacker-ai), an autonomous agentic penetration testing and intelligent defence platform, and has developed cybersecurity tooling for the Kerala Police Cyberdome's Grapnel Team. He writes at the intersection of AI engineering, cybersecurity and software engineering.
-
-[Portfolio](https://timstittus.com) · [GitHub](https://github.com/TimsTittus) · [LinkedIn](https://linkedin.com/in/tims-tittus)

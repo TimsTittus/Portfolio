@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { CodeBlock } from '@/components/blog/CodeBlock';
 import { MermaidDiagram } from '@/components/blog/MermaidDiagram';
+import { Faq, FaqItem } from '@/components/blog/Faq';
 import { ArrowLeft, Clock, Calendar, User, Share2, ChevronDown } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -412,6 +413,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   // Custom components for MDX
   const components = {
+    // Capitalised components are resolved from this map when used in MDX.
+    Faq,
+    FaqItem,
     h2: ({ children, ...props }: any) => {
       const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : String(children));
       const id = slugify(text);
