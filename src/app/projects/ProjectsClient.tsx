@@ -2,10 +2,12 @@
 
 import React, { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
-import { projects } from '@/data/projects';
+import { projects as allProjects } from '@/data/projects';
 import { achievements } from '@/data/achievements';
 import { SectionHeader } from '@/components/home/SectionHeader';
 import { ProjectArtwork } from './ProjectArtwork';
+
+const projects = allProjects.filter(project => !project.hidden);
 
 export default function ProjectsClient() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -18,7 +20,8 @@ export default function ProjectsClient() {
       return acc;
     }, {} as Record<string, number>);
 
-    const sortedTags = Object.keys(tagCounts).sort();
+    // Hide one-off tags so the filter bar stays usable; search still matches them
+    const sortedTags = Object.keys(tagCounts).filter(tag => tagCounts[tag] > 1).sort();
     return [
       { name: 'All', count: projects.length },
       ...sortedTags.map(tag => ({ name: tag, count: tagCounts[tag] }))

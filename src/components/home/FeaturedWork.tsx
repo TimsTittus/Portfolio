@@ -4,16 +4,13 @@ import { projects } from '@/data/projects';
 import { ProjectArtwork } from '@/app/projects/ProjectArtwork';
 import { SectionHeader } from './SectionHeader';
 
-const FEATURED_IDS = [12, 11, 10];
-
 const TILT = [-3.4, 2.2, -1.6];
 const DRIFT = [0, 28, 12];
 const TAPE = ['is-tape-left', 'is-tape-center', 'is-tape-right'];
 
 export const FeaturedWork: React.FC = () => {
-  const featuredProjects = FEATURED_IDS
-    .map(id => projects.find(proj => proj.id === id))
-    .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  // Driven by `featured: true` in src/data/projects.ts, in file order
+  const featuredProjects = projects.filter(project => project.featured && !project.hidden);
 
   return (
     <section className="section pt-12 pb-0" id="featured-work">
