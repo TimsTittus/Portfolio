@@ -2,30 +2,33 @@ import React from "react";
 import { Metadata } from 'next';
 import { GalleryClient } from '@/components/gallery/GalleryClient';
 import { galleryItems } from '@/data/gallery';
-import { getUploadedGalleryImages } from '@/lib/gallery-images';
-
-export const dynamic = 'force-dynamic';
+import { SectionHeader } from '@/components/home/SectionHeader';
 
 export const metadata: Metadata = {
     title: "Visual Gallery | Tims Tittus",
     description: "A curated visual journal of captured moments, events, engineering projects, and creative photography.",
 };
 
+const items = galleryItems.filter(item => !item.hidden);
+
 export default function GalleryPage() {
-    const items = [...galleryItems, ...getUploadedGalleryImages()];
-
     return (
-        <div className="min-h-screen pb-16 px-4 md:px-8 max-w-7xl mx-auto space-y-10 md:space-y-14">
-            <div className="text-center max-w-xl mx-auto space-y-3">
-                <h1 className="font-['Comic_Neue',cursive] text-4xl md:text-6xl font-bold tracking-tight text-black">
-                    Gallery
-                </h1>
-                <p className="font-['Inter',sans-serif] text-sm md:text-base text-black/60 leading-relaxed">
-                    A curated visual journal of captured moments, events, engineering projects, and creative photography.
-                </p>
-            </div>
+        <div className="w-full bg-[#FDF6F0] min-h-screen text-nb-black">
+            <section className="section" id="gallery">
+                <SectionHeader
+                    num="07"
+                    label="GALLERY"
+                    bleed="MOMENTS · FRAMES · STORIES"
+                    bleedStyle="solid"
+                    right={
+                        <span className="font-mono text-[11px] tracking-[.18em] text-[var(--ink-2)] uppercase">
+                            {String(items.length).padStart(2, '0')} FRAMES
+                        </span>
+                    }
+                />
 
-            <GalleryClient items={items} />
+                <GalleryClient items={items} />
+            </section>
         </div>
     );
 }
