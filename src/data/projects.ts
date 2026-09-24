@@ -1,6 +1,19 @@
+// Sections on the /projects page, shown in this order.
+// Move a project by changing its `section` to one of these ids.
+export const projectSections = [
+  { id: 'ai', title: 'AI & Machine Learning', blurb: 'Models, agents and AI-powered products.' },
+  { id: 'security', title: 'Cybersecurity', blurb: 'Offensive tooling, defenses and cryptography.' },
+  { id: 'web', title: 'Web Platforms', blurb: 'Full-stack products, dashboards and sites.' },
+  { id: 'tools', title: 'Hardware, Tools & Experiments', blurb: 'IoT builds, utilities, games and side quests.' },
+  { id: 'community', title: 'Community & Open Source', blurb: 'Club, college and open-source contributions.' },
+] as const;
+
+export type ProjectSection = (typeof projectSections)[number]['id'];
+
 export interface Project {
   id: number;
   title: string;
+  section: ProjectSection;
   description: string;
   image: string;
   tags: string[];
@@ -17,6 +30,7 @@ export const projects: Project[] = [
   {
     id: 10,
     title: 'Audio Adversarial Attack Generator',
+    section: 'ai',
     description: 'Built a white-box adversarial tool in PyTorch with Wav2Vec2 that uses mathematical optimization to embed inaudible hidden voice commands into audio, deceiving ASR systems while remaining imperceptible to humans.',
     image: '🔊',
     tags: ['Python', 'PyTorch', 'Adversarial ML', 'HuggingFace', 'Audio Signal Processing', 'Cybersecurity'],
@@ -29,6 +43,7 @@ export const projects: Project[] = [
   {
     id: 11,
     title: 'MonkeyPen.ai',
+    section: 'ai',
     description: 'AI-powered tool that converts text into realistic handwritten output, offering 50+ handwriting styles, real-time previews, and multi-format export options.',
     image: '✍️',
     tags: ['Python', 'Ai', 'Machine Learning', 'Flask', 'OpenCV', 'TypeScript', 'React'],
@@ -41,6 +56,7 @@ export const projects: Project[] = [
   {
     id: 12,
     title: 'ORVANE',
+    section: 'security',
     description: 'Secure browser extension for end-to-end encrypted messaging using AES with ECDH key exchange, password protection, and a backend for managing secure sessions.',
     image: '🔐',
     tags: ['HTML/CSS', 'JavaScript', 'Chrome Extension', 'Cryptography', 'Security', 'Encryption'],
@@ -53,6 +69,7 @@ export const projects: Project[] = [
   {
     id: 13,
     title: 'Kaithangu',
+    section: 'web',
     description: 'State-backed household services marketplace connecting users, workers, and Labour Cooperative Societies with transparent, government-set pricing — a fairer alternative to gig-economy aggregators.',
     image: '🧰',
     tags: ['TypeScript', 'Next.js', 'tRPC', 'Drizzle ORM', 'Redis', 'Twilio'],
@@ -64,6 +81,7 @@ export const projects: Project[] = [
   {
     id: 14,
     title: 'IDEA Lab Space',
+    section: 'web',
     description: 'Equipment reservations, real-time space check-ins, workshops and maker profiles for the SJCET AICTE IDEA Lab.',
     image: '🛠️',
     tags: ['TypeScript', 'Next.js', 'React'],
@@ -76,6 +94,7 @@ export const projects: Project[] = [
   {
     id: 15,
     title: 'Saints',
+    section: 'web',
     description: 'High-performance Catholic Saints archive with client-side sorting and filtering, global search, map-based geographic rendering, and Wikipedia-style profile pages.',
     image: '📜',
     tags: ['TypeScript', 'Next.js', 'Bun', 'Tailwind CSS'],
@@ -87,6 +106,7 @@ export const projects: Project[] = [
   {
     id: 16,
     title: 'Kerala Telemetry',
+    section: 'web',
     description: 'Real-time regional intelligence dashboard for Kerala.',
     image: '📡',
     tags: ['TypeScript', 'Next.js', 'Dashboard'],
@@ -99,6 +119,7 @@ export const projects: Project[] = [
   {
     id: 17,
     title: 'AgroStack',
+    section: 'ai',
     description: 'Award-winning weather-aware agronomic expert system and AI price engine for Kottayam farmers, combining predictive pricing, real-time risk analysis, simulated federated learning, and voice-based IVR.',
     image: '🌾',
     tags: ['TypeScript', 'Python', 'Next.js', 'FastAPI', 'Machine Learning', 'Ai'],
@@ -110,6 +131,7 @@ export const projects: Project[] = [
   {
     id: 18,
     title: 'Architecter',
+    section: 'ai',
     description: 'Recursive AI logic engine that transforms raw, unstructured requirements into production-ready JSON and English blueprints.',
     image: '🏗️',
     tags: ['TypeScript', 'Next.js', 'Ai', 'Prompt Engineering', 'Zustand'],
@@ -122,6 +144,7 @@ export const projects: Project[] = [
   {
     id: 19,
     title: 'CyberCore',
+    section: 'security',
     description: 'Collection of network and endpoint attack scripts built and tested for penetration testing practice.',
     image: '🧨',
     tags: ['Python', 'Cybersecurity', 'Security', 'Penetration Testing'],
@@ -133,6 +156,7 @@ export const projects: Project[] = [
   {
     id: 20,
     title: 'EternalBlue',
+    section: 'security',
     description: 'Step-by-step guide to exploiting MS17-010 (EternalBlue): recon, exploitation, gaining a SYSTEM shell, and post-exploitation.',
     image: '💥',
     tags: ['Cybersecurity', 'Security', 'Penetration Testing'],
@@ -144,6 +168,7 @@ export const projects: Project[] = [
   {
     id: 22,
     title: 'Hacker AI',
+    section: 'ai',
     description: 'Autonomous AI pentesting with proactive intelligent defense — an agentic Smart SOC.',
     image: '🤖',
     tags: ['Ai', 'LLM', 'Agentic AI', 'Cybersecurity', 'Penetration Testing'],
@@ -155,6 +180,7 @@ export const projects: Project[] = [
   {
     id: 21,
     title: 'RehabGlove',
+    section: 'tools',
     description: 'Smart ESP32-based hand rehabilitation glove with automated finger mobilization, ROM therapy, real-time monitoring, recovery analytics, and a clinical web dashboard.',
     image: '🧤',
     tags: ['TypeScript', 'Next.js', 'ESP32', 'IoT', 'Embedded Systems'],
@@ -166,6 +192,7 @@ export const projects: Project[] = [
   {
     id: 23,
     title: 'Demokratia',
+    section: 'web',
     description: 'High-integrity, domain-restricted student election platform with Google OAuth and real-time result tracking.',
     image: '🗳️',
     tags: ['TypeScript', 'Next.js', 'tRPC', 'Drizzle ORM', 'Supabase'],
@@ -178,6 +205,7 @@ export const projects: Project[] = [
   {
     id: 24,
     title: 'Phisher',
+    section: 'security',
     description: 'Browser extension that detects phishing and malicious URLs in real time using heuristics, pattern analysis, and threat intelligence APIs.',
     image: '🎣',
     tags: ['JavaScript', 'Chrome Extension', 'Cybersecurity', 'Security'],
@@ -189,6 +217,7 @@ export const projects: Project[] = [
   {
     id: 25,
     title: '3D Dev Portfolio',
+    section: 'web',
     description: 'Interactive 3D developer portfolio built with Spline.',
     image: '🧊',
     tags: ['TypeScript', 'React', 'Spline', '3D'],
@@ -201,6 +230,7 @@ export const projects: Project[] = [
   {
     id: 26,
     title: 'AmbieNZ',
+    section: 'web',
     description: 'Web-based ambience sound generator for mixing background soundscapes.',
     image: '🎧',
     tags: ['HTML/CSS', 'JavaScript'],
@@ -213,6 +243,7 @@ export const projects: Project[] = [
   {
     id: 27,
     title: 'ADCodec',
+    section: 'tools',
     description: 'Data transcoder that encodes any file into an image and decodes it back to the original file.',
     image: '🖼️',
     tags: ['Python', 'Encoding'],
@@ -224,6 +255,7 @@ export const projects: Project[] = [
   {
     id: 28,
     title: 'Pixel Game',
+    section: 'tools',
     description: 'Pixel-art game built with the Godot engine.',
     image: '🎮',
     tags: ['GDScript', 'Godot', 'Game Dev'],
@@ -235,6 +267,7 @@ export const projects: Project[] = [
   {
     id: 4,
     title: 'Asthra-CTF',
+    section: 'security',
     description: 'Developed a complete CTF platform from scratch with my team for the national tech fest Asthra.',
     image: '🚩',
     tags: ['HTML/CSS', 'JavaScript', 'Python', 'Docker', 'CTF', 'Security'],
@@ -246,6 +279,7 @@ export const projects: Project[] = [
   {
     id: 1,
     title: 'Steg Tool',
+    section: 'security',
     description: 'A steganography tool that allows you to hide and extract messages within images.',
     image: '📸',
     tags: ['Python', 'Cryptography', 'Streamlit', 'Security'],
@@ -258,6 +292,7 @@ export const projects: Project[] = [
   {
     id: 2,
     title: 'HomeChime',
+    section: 'tools',
     description: 'Browser based app that, inspired by my family’s anxious wait for my younger brother’s school bus.',
     image: '🔔',
     tags: ['HTML/CSS', 'JavaScript', 'Chrome Extension'],
@@ -270,6 +305,7 @@ export const projects: Project[] = [
   {
     id: 3,
     title: 'WEBVNR Desktop',
+    section: 'security',
     description: 'Python + Qt app to test web endpoints for SQLi, XSS, and sensitive data leaks with custom payloads and results.',
     image: '🛡️',
     tags: ['Python', 'PyQt', 'Desktop App', 'Security'],
@@ -282,6 +318,7 @@ export const projects: Project[] = [
   {
     id: 5,
     title: '404-Extension',
+    section: 'tools',
     description: 'Chrome extension that tracks 404 error page visits, saves their history and count locally, and displays both in a popup.',
     image: '🚫',
     tags: ['HTML/CSS', 'JavaScript'],
@@ -293,6 +330,7 @@ export const projects: Project[] = [
   {
     id: 6,
     title: 'Parking Management System',
+    section: 'tools',
     description: 'Helps us to enter, display or alter the details of vehicles in parking records.',
     image: '🅿️',
     tags: ['Python', 'MySQL'],
@@ -304,6 +342,7 @@ export const projects: Project[] = [
   {
     id: 7,
     title: 'Sjcet Events',
+    section: 'community',
     description: 'Contributed to this platform for managing and viewing events happening at SJCET',
     image: '📅',
     tags: ['OpenSource', 'HTML/CSS', 'JavaScript', 'Vue'],
@@ -316,6 +355,7 @@ export const projects: Project[] = [
   {
     id: 8,
     title: 'Print-Shop',
+    section: 'community',
     description: 'OpenSource web application developed to improve efficiency of printing services within a college environment.',
     image: '🖨️',
     tags: ['OpenSource', 'CSS', 'Python', 'Mako', 'TypeScript'],
@@ -327,6 +367,7 @@ export const projects: Project[] = [
   {
     id: 9,
     title: 'Portfolio Website',
+    section: 'web',
     description: 'A minimalist portfolio website crafted to highlight my technical projects and creative work.',
     image: '🌐',
     tags: ['HTML/CSS', 'React', 'Vite', 'JavaScript'],
@@ -341,6 +382,7 @@ export const projects: Project[] = [
   {
     id: 29,
     title: 'IEDC Portal',
+    section: 'community',
     description: 'Contributed to the IEDC portal with role-based dashboards, QR-based event check-in, and a certificate engine.',
     image: '🏛️',
     tags: ['OpenSource', 'TypeScript', 'Next.js', 'Supabase'],
@@ -348,12 +390,12 @@ export const projects: Project[] = [
       live: 'https://portal.iedc.sjcet.in',
       github: 'https://github.com/TimsTittus/IEDC-Portal'
     },
-    featured: false,
-    hidden: true
+    featured: true
   },
   {
     id: 30,
     title: 'IEEE Execom',
+    section: 'community',
     description: 'Contributed detail pages for the IEEE execom.',
     image: '👥',
     tags: ['OpenSource', 'MDX', 'Next.js'],
@@ -367,6 +409,7 @@ export const projects: Project[] = [
   {
     id: 31,
     title: 'IEDC Bootcamp 2026',
+    section: 'community',
     description: 'Contributed to the IEDC 2026 bootcamp website.',
     image: '🚀',
     tags: ['OpenSource', 'TypeScript', 'Next.js'],
@@ -374,12 +417,12 @@ export const projects: Project[] = [
       live: 'https://bootcampiedc.vercel.app',
       github: 'https://github.com/TimsTittus/iedc-2026'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 32,
     title: 'SIIF',
+    section: 'community',
     description: 'Contributed to the SIIF website.',
     image: '🌐',
     tags: ['OpenSource', 'TypeScript', 'Next.js'],
@@ -387,24 +430,24 @@ export const projects: Project[] = [
       live: 'https://siif-two.vercel.app',
       github: 'https://github.com/TimsTittus/siif'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 33,
     title: 'IEEE SB Deploy',
+    section: 'community',
     description: 'Contributed to the IEEE Student Branch website deployment.',
     image: '🌐',
     tags: ['OpenSource', 'HTML/CSS'],
     links: {
       github: 'https://github.com/TimsTittus/IEEE-sb-deploy'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 34,
     title: 'Tesseract 9.0',
+    section: 'community',
     description: 'Contributed to the official website for Tesseract 9.0.',
     image: '🧮',
     tags: ['OpenSource', 'TypeScript', 'React', 'Supabase'],
@@ -412,24 +455,24 @@ export const projects: Project[] = [
       live: 'https://tesseract.sjcetpalai.ac.in',
       github: 'https://github.com/TimsTittus/Tesseract-9.0'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 35,
     title: 'Tech for Good',
+    section: 'community',
     description: 'Contributed to a web application for running tournaments, with admin setup and configurable public registration forms.',
     image: '🏆',
     tags: ['OpenSource', 'TypeScript'],
     links: {
       github: 'https://github.com/TimsTittus/techfourgood'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 36,
     title: 'Nexus Website',
+    section: 'community',
     description: 'Contributed to the official Nexus SJCET website.',
     image: '🌐',
     tags: ['OpenSource', 'TypeScript'],
@@ -437,67 +480,54 @@ export const projects: Project[] = [
       live: 'https://nexus.sjcetpalai.ac.in',
       github: 'https://github.com/TimsTittus/nexussjcet.github.io'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 38,
     title: 'Nexus Spaces',
+    section: 'community',
     description: 'Contributed to an AI-driven social platform connecting SJCET students with developers, designers, and other skilled individuals.',
     image: '🪐',
     tags: ['OpenSource', 'TypeScript', 'Ai'],
     links: {
       github: 'https://github.com/TimsTittus/nexus-spaces'
     },
-    featured: false,
-    hidden: true
-  },
-  {
-    id: 50,
-    title: 'Scripting for Security',
-    description: 'Python scripts for security tasks.',
-    image: '🐍',
-    tags: ['Python', 'Security'],
-    links: {
-      github: 'https://github.com/TimsTittus/scripting_for_security'
-    },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 51,
     title: 'SIH24',
+    section: 'tools',
     description: 'Smart India Hackathon 2024 work.',
     image: '💡',
     tags: ['Hackathon'],
     links: {
       github: 'https://github.com/TimsTittus/SIH24'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 52,
     title: 'Unit Measurement Conversion',
+    section: 'tools',
     description: 'Converter for basic units such as temperature, currency, and mass.',
     image: '📏',
     tags: ['C'],
     links: {
       github: 'https://github.com/TimsTittus/Unit-Measurement-Conversion'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
   {
     id: 53,
     title: 'Resume',
+    section: 'tools',
     description: 'LaTeX source for my resume.',
     image: '📄',
     tags: ['TeX'],
     links: {
       github: 'https://github.com/TimsTittus/Resume'
     },
-    featured: false,
-    hidden: true
+    featured: false
   },
 ];

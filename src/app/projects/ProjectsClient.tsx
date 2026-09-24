@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
-import { projects as allProjects } from '@/data/projects';
+import { projects as allProjects, projectSections } from '@/data/projects';
 import { achievements } from '@/data/achievements';
 import { SectionHeader } from '@/components/home/SectionHeader';
 import { ProjectArtwork } from './ProjectArtwork';
@@ -123,35 +123,58 @@ export default function ProjectsClient() {
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects, grouped by section (order and membership set in src/data/projects.ts) */}
         {filteredProjects.length > 0 ? (
-          <div className="proj-grid">
-            {filteredProjects.map((project) => {
-              const url = project.links.live || project.links.github;
+          <div className="flex flex-col gap-16">
+            {projectSections.map(section => {
+              const sectionProjects = filteredProjects.filter(project => project.section === section.id);
+              if (sectionProjects.length === 0) return null;
 
               return (
-                <a href={url} key={project.id} className="proj-card relative">
-                  {project.featured && (
-                    <div className="absolute top-3 right-3 bg-[var(--accent)] text-white px-2 py-0.5 rounded-full text-[9px] font-mono tracking-widest uppercase font-bold z-10">
-                      Featured
+                <div key={section.id} id={`section-${section.id}`} className="scroll-mt-24">
+                  <header className="flex items-end justify-between gap-4 border-b border-[var(--line-2)] pb-3 mb-8">
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]" style={{ fontFamily: "'Comic Neue', 'Comic Sans MS', cursive" }}>
+                        {section.title}
+                      </h2>
+                      <p className="mt-1 font-mono text-xs text-[var(--ink-2)]">{section.blurb}</p>
                     </div>
-                  )}
+                    <span className="shrink-0 font-mono text-[11px] tracking-[.18em] text-[var(--ink-2)] uppercase">
+                      {String(sectionProjects.length).padStart(2, '0')}
+                    </span>
+                  </header>
 
-                  <div className="proj-card-art">
-                    <ProjectArtwork title={project.title} />
+                  <div className="proj-grid">
+                    {sectionProjects.map((project) => {
+                      const url = project.links.live || project.links.github;
+
+                      return (
+                        <a href={url} key={project.id} className="proj-card relative">
+                          {project.featured && (
+                            <div className="absolute top-3 right-3 bg-[var(--accent)] text-white px-2 py-0.5 rounded-full text-[9px] font-mono tracking-widest uppercase font-bold z-10">
+                              Featured
+                            </div>
+                          )}
+
+                          <div className="proj-card-art">
+                            <ProjectArtwork title={project.title} />
+                          </div>
+
+                          <div className="proj-card-body">
+                            <h3 className="proj-card-title">{project.title}</h3>
+                            <div className="proj-card-tag">{project.description}</div>
+
+                            <div className="proj-card-chips">
+                              {project.tags.map(tag => (
+                                <span key={tag} className="chip">{tag}</span>
+                              ))}
+                            </div>
+                          </div>
+                        </a>
+                      );
+                    })}
                   </div>
-
-                  <div className="proj-card-body">
-                    <h3 className="proj-card-title">{project.title}</h3>
-                    <div className="proj-card-tag">{project.description}</div>
-
-                    <div className="proj-card-chips">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="chip">{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                </a>
+                </div>
               );
             })}
           </div>
